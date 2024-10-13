@@ -2,6 +2,8 @@
 
 //1
 #include "expression.hpp"
+//3
+#include "set.hpp"
 //4
 #include "Array.hpp"
 //6
