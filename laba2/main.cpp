@@ -2,10 +2,15 @@
 
 #include "hash_table.hpp"
 #include "subordinates.hpp"
+#include "expression.hpp"
 
 int main(){
     std::cout << "------------Task 1-----------" << std::endl;
-
+    std::string expression = "1 & (0 | 1) ^ 1";
+    std::cout << "Expression: " << expression << std::endl;
+    
+    int result = evaluate_expression(expression);
+    std::cout << "Result: " << result << std::endl;
 
     std::cout << "------------Task 3-----------" << std::endl;
 
@@ -15,7 +20,6 @@ int main(){
 
     std::cout << "------------Task 5-----------" << std::endl;
 
-    
 
     std::cout << "------------Task 6-----------" << std::endl;
     Hash_map<std::string, std::string, 1> table;
