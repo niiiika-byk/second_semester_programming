@@ -5,6 +5,10 @@
 template <typename Key, typename Value>
 class Hash_node {
 public:
+    Key _key;
+    Value _value;
+    Hash_node* _next;
+    
     Hash_node(const Hash_node &) = delete;      //конструктор копирования запрещен
     Hash_node & operator=(const Hash_node &) = delete; //оператор присваивания запрещен
     Hash_node(const Key &key, const Value &value) :
@@ -35,8 +39,4 @@ public:
         _next = next;
     }
 
-private:
-    Key _key;
-    Value _value;
-    Hash_node* _next;
 };
