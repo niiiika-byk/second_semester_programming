@@ -4,8 +4,11 @@
 #include "expression.hpp"
 //3
 #include "set.hpp"
+#include "min_sum_set.hpp"
 //4
 #include "Array.hpp"
+//5
+#include "tree.hpp"
 //6
 #include "hash_table.hpp"
 #include "subordinates.hpp"
@@ -19,7 +22,14 @@ int main(){
     std::cout << "Result: " << result << std::endl;
 
     std::cout << "------------Task 3-----------" << std::endl;
+    Set<int> mySet;
+    mySet.add(5);
+    mySet.add(8);
+    mySet.add(1);
+    mySet.add(14);
+    mySet.add(7);
 
+    find_min_difference_partition(mySet);
 
     std::cout << "------------Task 4-----------" << std::endl;
     Array<int> arr;
@@ -43,6 +53,17 @@ int main(){
 
     std::cout << "------------Task 5-----------" << std::endl;
 
+    AVLTree<int> tree;
+    tree.create_root(22);
+    tree.insert(tree.root, 16);
+    tree.insert(tree.root, 51);
+    tree.insert(tree.root, 7);
+    tree.insert(tree.root, 19);
+    tree.insert(tree.root, 43);
+    tree.insert(tree.root, 57);
+
+    tree.printTree(tree.root);
+    std::cout << std::endl;
 
     std::cout << "------------Task 6-----------" << std::endl;
     Hash_map<std::string, std::string, 1> table;
