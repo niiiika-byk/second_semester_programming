@@ -22,14 +22,15 @@ int main(){
     std::cout << "Result: " << result << std::endl;
 
     std::cout << "------------Task 3-----------" << std::endl;
-    Set<int> mySet;
+    Set<int, 1> mySet;
     mySet.add(5);
     mySet.add(8);
     mySet.add(1);
     mySet.add(14);
     mySet.add(7);
+    std::vector<int> input_set = {5, 8, 1, 14, 7};
 
-    find_min_difference_partition(mySet);
+    find_min_difference_partition(input_set);
 
     std::cout << "------------Task 4-----------" << std::endl;
     Array<int> arr;

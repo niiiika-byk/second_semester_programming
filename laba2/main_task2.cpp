@@ -4,7 +4,7 @@
 
 #include "set.hpp"
 
-Set<int> mySet;
+Set<int, 1> mySet;
 
 int main() {
     // Интерактивный ввод команд
@@ -38,7 +38,7 @@ int main() {
         else if (command == "SET_AT"){ // Получение значения по ключу
             int value;
             ss >> value;
-            std::cout << "Is "<< value <<" a member: " << mySet.is_member(value) << std::endl;
+            std::cout << "Is "<< value <<" a member: " << mySet.get_value(value) << std::endl;
         }
         else if (command == "SETPRINT"){ //Вывод на экран
             mySet.load_from_file("set.txt");

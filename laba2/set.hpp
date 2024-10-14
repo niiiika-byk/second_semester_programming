@@ -1,39 +1,158 @@
 #pragma once
 
 #include <iostream>
-#include "hash_table.hpp"
+#include <fstream>
+#include "set_node.hpp"
+#include "hash_function.hpp"
 
-template <typename Key>
+template <typename Key, unsigned long table_size,typename Hash_func = Hash_function<Key>>
 class Set{
-private:
-    Hash_map<Key, bool, 1> elements;
-
 public:
-    // Добавление элемента
-    void add(const Key& value) {
-        elements.insert(value, true); // Используем true как значение, чтобы обозначить наличие ключа
+
+    Set_node<Key>* table[table_size];
+    Hash_func hash;
+    int capacity_size = 0;
+
+    Set() {
+        for (int i = 0; i < table_size; i++) {
+            table[i] = nullptr;
+        }    
+    }
+    ~Set() {
+        for (unsigned long i = 0; i < table_size; i++) {
+            Set_node<Key> *entry = table[i];
+            while (entry != nullptr) {
+                Set_node<Key> *prev = entry;
+                entry = entry->get_next();
+                delete prev;
+
+            }
+        }
     }
 
-    // Удаление элемента
-    void remove(const Key& value) {
-        elements.remove(value);
+    Key get_value(const Key &key) {
+        unsigned long hash_value = hash(key, table_size);
+        Set_node<Key>* entry = table[hash_value];
+
+        while (entry != nullptr) {
+            if (entry->get_key() == key) {
+                return entry->get_key();
+            }
+            entry = entry->get_next();
+        }
+        return Key();
     }
 
-    // Проверка, является ли элемент частью множества
-    bool is_member(const Key& value) {
-        return elements.get_value(value); // Если элемент существует, вернет true
+    void add(const Key &key){
+        unsigned long hash_value = hash(key, table_size);
+        Set_node<Key> *prev = nullptr;
+        Set_node<Key> *entry = table[hash_value];
+
+        while (entry != nullptr && entry->get_key() != key) {
+            prev = entry;
+            entry = entry->get_next();
+        }
+
+        if (entry == nullptr) {
+            entry = new Set_node<Key>(key);
+
+            if (prev == nullptr) {
+                table[hash_value] = entry;
+
+            } else {
+                prev->set_next(entry);
+            }
+
+        } else {
+            
+            entry->get_key();
+        }
     }
 
-    // Вывод элементов множества
+    void remove(const Key &key) {
+        unsigned long hash_value = hash(key, table_size);
+        Set_node<Key> *prev = nullptr;
+        Set_node<Key> *entry = table[hash_value];
+
+        while (entry != nullptr && entry->get_key() != key) {
+            prev = entry;
+            entry = entry->get_next();
+        }
+
+        if (entry == nullptr) {
+            return;
+
+        } else {
+            if (prev == nullptr) {
+                table[hash_value] = entry->get_next();
+
+            } else {
+                prev->set_next(entry->get_next());
+            }
+
+            capacity_size--;
+            delete entry;
+        }
+    }
+    
     void display() {
-        elements.display(); // Вывод элементов из хэш-таблицы
+        std::cout << "Set: ";
+        for (unsigned long i = 0; i < table_size; i++) {
+            Set_node<Key> *entry = table[i];
+            while (entry != nullptr) {
+                std::cout << entry->get_key() << " ";
+                entry = entry->get_next();
+            }
+        }
+        std::cout << std::endl;
+    }
+    
+    void clear() {
+        for (unsigned long i = 0; i < table_size; i++) {
+            Set_node<Key> *entry = table[i];
+            while (entry != nullptr) {
+                Set_node<Key> *prev = entry;
+                entry = entry->get_next();
+                delete prev;
+            }
+            table[i] = nullptr;
+        }
     }
 
-    void load_from_file(const std::string& filename) {
-        elements.load_from_file(filename);
+    void load_from_file(const std::string &filename) {
+        clear();
+        std::ifstream file(filename);
+        if (!file.is_open()) {
+            std::cerr << "Failed open file" << std::endl;
+            return;
+        }
+
+        std::string line;
+        while (std::getline(file, line)) {
+            std::istringstream iss(line);
+            Key key;
+            iss >> key;
+            add(key);
+        }
+
+        file.close();
     }
 
-    void save_to_file(const std::string& filename) {
-        elements.save_to_file(filename);
+    void save_to_file(const std::string &filename) {
+        std::ofstream file(filename);
+        if (!file.is_open()) {
+            std::cerr << "Failed open file" << std::endl;
+            return;
+        }
+
+        for (unsigned long i = 0; i < table_size; i++) {
+            Set_node<Key> *entry = table[i];
+            while (entry != nullptr) {
+                file << entry->get_key() << std::endl;
+                entry = entry->get_next();
+            }
+        }
+
+        file.close();
     }
 };
