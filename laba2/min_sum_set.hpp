@@ -35,7 +35,7 @@ void find_min_difference_partition(Set<int, 1>& input_set) {
     int sum2 = total_sum - sum1;
     int difference = std::abs(sum2 - sum1);
 
-    Set<int, 1000> subset1, subset2;
+    Set<int, 1> subset1, subset2;
     int w = sum1;
 
     for (int i = count - 1; i >= 0; --i) {
