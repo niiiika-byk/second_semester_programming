@@ -1,60 +1,58 @@
 #include <iostream>
-#include <numeric>
 #include <cmath>
-#include <vector>
+#include <string>
+#include <sstream>
 
 #include "set.hpp"
 
-void find_min_difference_partition(std::vector<int>& input_set) {
-    int sum = 0;
-    for (int i : input_set) {
-        sum += i;
+void find_min_difference_partition(Set<int, 1>& input_set) {
+    Set_node<int>* elements[1000];  //указетли на узлы сета
+    int count = 0;
+
+    input_set.get_all_elements(elements, count);
+
+    int total_sum = 0;
+    for (int i = 0; i < count; ++i) {
+        total_sum += elements[i]->get_key();
     }
 
-    int target_sum = sum / 2;
-
-    std::vector<bool> dp(target_sum + 1, false);
+    int target = total_sum / 2;
+    bool dp[1001] = {false};
     dp[0] = true;
 
-    for (int i : input_set) {
-        for (int j = target_sum; j >= i; --j) {
-            if (dp[j - i]) {
-                dp[j] = true;
-            }
+    for (int i = 0; i < count; ++i) {
+        int num = elements[i]->get_key();
+        for (int j = target; j >= num; --j) {
+            dp[j] = dp[j] || dp[j - num];
         }
     }
 
-    int max_sum = 0;
-    for (int i = 0; i <= target_sum; ++i) {
-        if (dp[i]) {
-            max_sum = i;
-        }
+    int sum1;
+    for (sum1 = target; sum1 >= 0; --sum1) {
+        if (dp[sum1]) break;
     }
 
-    int diff = sum - 2 * max_sum;
+    int sum2 = total_sum - sum1;
+    int difference = std::abs(sum2 - sum1);
 
-    std::cout << "Разница между суммами: " << diff << std::endl;
+    Set<int, 1000> subset1, subset2;
+    int w = sum1;
 
-    // Вывод подмножеств
-    std::vector<int> subset1, subset2;
-    for (int i : input_set) {
-        if (dp[max_sum - i]) {
-            subset1.push_back(i);
-            max_sum -= i;
+    for (int i = count - 1; i >= 0; --i) {
+        int num = elements[i]->get_key();
+        if (w >= num && dp[w - num]) {
+            subset1.add(num);
+            w -= num;
         } else {
-            subset2.push_back(i);
+            subset2.add(num);
         }
     }
 
-    std::cout << "Подмножество 1: ";
-    for (int i : subset1) {
-        std::cout << i << " ";
-    }
-    std::cout << std::endl;
+    std::cout << "Difference between sums: " << difference << std::endl;
 
-    std::cout << "Подмножество 2: ";
-    for (int i : subset2) {
-        std::cout << i << " ";
-    }
-    std::cout << std::endl;
+    std::cout << "Subset 1: ";
+    subset1.display();
+
+    std::cout << "Subset 2: ";
+    subset2.display();
 }

@@ -20,6 +20,7 @@ int main(){
     
     int result = evaluate_expression(expression);
     std::cout << "Result: " << result << std::endl;
+    std::cout << std::endl;
 
     std::cout << "------------Task 3-----------" << std::endl;
     Set<int, 1> mySet;
@@ -28,9 +29,9 @@ int main(){
     mySet.add(1);
     mySet.add(14);
     mySet.add(7);
-    std::vector<int> input_set = {5, 8, 1, 14, 7};
 
-    find_min_difference_partition(input_set);
+    find_min_difference_partition(mySet);
+    std::cout << std::endl;
 
     std::cout << "------------Task 4-----------" << std::endl;
     Array<int> arr;
@@ -45,12 +46,10 @@ int main(){
     arr.push_back(4);
     arr.push_back(1);
 
-    std::cout << "Array: ";
-    arr.display();
-
     int target_sum = 5;
     std::cout << "Finding subarrays with sum " << target_sum << ":\n";
     arr.find_sum(target_sum);
+    std::cout << std::endl;
 
     std::cout << "------------Task 5-----------" << std::endl;
 
@@ -64,6 +63,7 @@ int main(){
     tree.insert(tree.root, 57);
 
     tree.printTree(tree.root);
+    std::cout << std::endl;
     std::cout << std::endl;
 
     std::cout << "------------Task 6-----------" << std::endl;

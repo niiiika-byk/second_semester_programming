@@ -55,7 +55,7 @@ public:
 
         if (entry == nullptr) {
             entry = new Set_node<Key>(key);
-
+            capacity_size++;
             if (prev == nullptr) {
                 table[hash_value] = entry;
 
@@ -63,9 +63,6 @@ public:
                 prev->set_next(entry);
             }
 
-        } else {
-            
-            entry->get_key();
         }
     }
 
@@ -96,7 +93,6 @@ public:
     }
     
     void display() {
-        std::cout << "Set: ";
         for (unsigned long i = 0; i < table_size; i++) {
             Set_node<Key> *entry = table[i];
             while (entry != nullptr) {
@@ -154,5 +150,17 @@ public:
         }
 
         file.close();
+    }
+
+    void get_all_elements(Set_node<Key>* elements[], int &count) {
+        count = 0; // Сброс счётчика
+        
+        for (unsigned long i = 0; i < table_size; i++) {
+            Set_node<Key>* entry = table[i];
+            while (entry != nullptr) {
+                elements[count++] = entry; // Сохраняем указатель на элемент
+                entry = entry->get_next();
+            }
+        }
     }
 };
