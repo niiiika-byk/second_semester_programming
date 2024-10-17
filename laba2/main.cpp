@@ -15,7 +15,7 @@
 
 int main(){
     std::cout << "------------Task 1-----------" << std::endl;
-    std::string expression = "1 & (0 | 1) ^ 1";
+    std::string expression = "1 & (0 | 1 & 0) ^ 1 & (1 | 0)";
     std::cout << "Expression: " << expression << std::endl;
     
     int result = evaluate_expression(expression);
@@ -74,7 +74,6 @@ int main(){
     table.insert("D", "E");
     table.insert("B", "E");
     table.insert("E", "E");
-    table.insert("F", "A");
 
     Hash_map<std::string, int, 1> count_table;
     subordinates(table, count_table);

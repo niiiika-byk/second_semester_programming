@@ -11,9 +11,7 @@ int count_subordinates(const Hash_map<std::string, std::string, 1>& table, const
         std::string supervisor = entry->get_value(); // получаем менеджера сотрудника
         if (supervisor == manager) {
             count++; // увеличиваем счетчик, если сотрудник является подчиненным менеджера
-            if(supervisor == employee){
-                count++;
-            }
+            count += count_subordinates(table, employee); // Рекурсивно считаем подчиненных
         }
         entry = entry->get_next();
     }
