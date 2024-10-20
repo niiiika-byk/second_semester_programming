@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 
-#include "struct_data_base.hpp"
+#include "all_structures.hpp"
 #include "create_files.hpp"
 
 int main(){

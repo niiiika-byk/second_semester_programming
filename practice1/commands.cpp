@@ -2,7 +2,7 @@
 #include <fstream>
 #include <cstddef>
 #include <string>
-#include "struct_data_base.hpp"
+#include "all_structures.hpp"
 #include "HashTable.hpp"
 
 void command_processing(const Base_tables& base_tables) {

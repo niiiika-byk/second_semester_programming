@@ -5,7 +5,7 @@
 #include <ostream>
 #include <filesystem>
 #include "json.hpp"
-#include "struct_data_base.hpp"
+#include "all_structures.hpp"
 
 void load_schema(Base_tables& base_tables, const std::string& name_json) {
     std::ifstream file(name_json);

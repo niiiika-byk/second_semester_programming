@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include "HashTable.hpp"
 
@@ -78,7 +79,8 @@ public:
     }
 };
 
-struct Table{
+class Table{
+public:
     std::string table_name;
     LinkedList column_name;
     int tuples;
@@ -86,7 +88,8 @@ struct Table{
     Hash_map<std::string, std::string, 1> table_values;
 };
 
-struct Table_Node {
+class Table_Node {
+public:
     Table data;
     Table_Node* next;
     Table_Node* prev;
@@ -96,7 +99,8 @@ struct Table_Node {
     }
 };
 
-struct TablesLinkedList{ 
+class TablesLinkedList{
+public: 
     Table_Node* head;
     Table_Node* tail;
 
@@ -113,7 +117,8 @@ struct TablesLinkedList{
     
 };
 
-struct Base_tables {  //схема всех таблиц
+class Base_tables {  //схема всех таблиц
+public:
     std::string schema_name;
     int tuples_limit;
     TablesLinkedList tables;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "struct_data_base.hpp"
+#include "all_structures.hpp"
 #include "hash_function.hpp"
 #include <iostream>
 
