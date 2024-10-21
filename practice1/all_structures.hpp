@@ -86,6 +86,14 @@ public:
     int tuples;
 
     Hash_map<std::string, std::string, 1> table_values;
+
+    ~Table() {
+        while (this->column_name.head != nullptr) {
+            Node* next = this->column_name.head->next;
+            delete this->column_name.head;
+            this->column_name.head = next;
+        }
+    }
 };
 
 class Table_Node {
@@ -106,6 +114,14 @@ public:
 
     TablesLinkedList() : head(nullptr), tail(nullptr) {}
 
+    ~TablesLinkedList() {
+        while (this->head != nullptr) {
+            Table_Node* next = this->head->next;
+            delete this->head;
+            this->head = next;
+        }
+    }
+
     void push_front_table(Table value);
     void push_back_table(Table value);
     void pop_head_table();
@@ -124,6 +140,14 @@ public:
     TablesLinkedList tables;
     
     Hash_map<std::string, std::string, 1> hash_table_columns;  // Хеш-таблица для хранения колонок
+
+    ~Base_tables() {
+        while (this->tables.head != nullptr) {
+            Table_Node* next = this->tables.head->next;
+            delete this->tables.head;
+            this->tables.head = next;
+        }
+    }
 };
 
 void load_schema(Base_tables& base_tables, const std::string& name_json);
