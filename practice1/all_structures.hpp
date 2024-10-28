@@ -40,43 +40,9 @@ public:
     void pop_tail();
     void pop(int index);
     void pop_value(const std::string& value);
-    Node* LinkedList::search_value(std::string value);
+    Node* search_value(std::string value);
     void display();
     void clear();
-};
-
-template <typename Key, typename Value>
-class Hash_node {
-public:
-    Key _key;
-    Value _value;
-    Hash_node* _next;
-    
-    Hash_node(const Hash_node &) = delete;      //конструктор копирования запрещен
-    Hash_node & operator=(const Hash_node &) = delete; //оператор присваивания запрещен
-
-    Hash_node(const Key &key, const Value &value) :
-        _key(key), _value(value), _next(nullptr){}
-
-    Key get_key() const{
-        return _key;
-    }
-
-    Value get_value() const {
-        return _value;
-    }
-
-    void set_value(Value value) {
-        _value = value;
-    }
-
-    Hash_node* get_next() const {
-        return _next;
-    }
-
-    void set_next(Hash_node *next) {
-        _next = next;
-    }
 };
 
 class Table{
@@ -161,3 +127,5 @@ void create_lock_file(const std::string& dir_table, const std::string& table_nam
 void command_processing(const Base_tables& base_tables);
 
 void create_directories_and_files(const Base_tables& base_tables);
+
+void insert_to_table(std::string schema_name, std::string file_directory, std::string file_name, const Base_tables& base_tables);

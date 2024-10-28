@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 
-#include "struct_data_base.hpp"
+#include "all_structures.hpp"
 
 using namespace std;
 
