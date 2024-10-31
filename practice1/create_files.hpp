@@ -4,8 +4,9 @@
 #include <stdexcept>
 #include <ostream>
 #include <filesystem>
-#include "json.hpp"
+
 #include "all_structures.hpp"
+#include "json.hpp"
 
 void load_schema(Base_tables& base_tables, const std::string& name_json) {
     std::ifstream file(name_json);
@@ -32,6 +33,8 @@ void load_schema(Base_tables& base_tables, const std::string& name_json) {
 
         base_tables.tables.push_back_table(tempTable);
     }
+    
+    file.close();
 }
 
 void create_directories_and_files(const Base_tables& base_tables) {

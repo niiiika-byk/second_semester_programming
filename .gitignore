@@ -22,3 +22,12 @@ practice1/create_files.hpp.gch
 practice1/HashTable.hpp.gch
 practice1/a.out
 practice1/command.txt
+practice1/.vscode/c_cpp_properties.json
+practice1/.vscode/launch.json
+practice1/.vscode/settings.json
+practice1/build/Debug/commands.o
+practice1/build/Debug/linked_list.o
+practice1/build/Debug/main.o
+practice1/build/Debug/outDebug
+practice1/build/Debug/SQL_query.o
+practice1/build/Debug/unlinked_list.o
