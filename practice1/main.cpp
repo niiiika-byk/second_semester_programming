@@ -1,20 +1,34 @@
-#include <iostream>
-#include <fstream>
-#include <string>
+#include "parser.hpp"
+#include "insert.hpp"
+#include "delete.hpp"
+#include "select.hpp"
 
-#include "all_structures.hpp"
-#include "create_files.hpp"
+int main() {
+    TableJson tableJS;
+    parsing(tableJS);
 
-int main(){
-    Base_tables base_tables;
-    try {
-        load_schema(base_tables, "schema.json");
-        create_directories_and_files(base_tables);
-        std::cout << "Files created" << std::endl;
-        command_processing(base_tables);
-
-    } catch (const std::exception& ex) {
-        std::cerr << "Error: " << ex.what() << std::endl;
+    string command;
+    while (true) {
+        cout << ">>> ";
+        getline(cin, command);
+        if (command == "") {
+            continue;
+        }
+        if (command == "EXIT") {
+            return 0;
+        }
+        else if (command.find("INSERT") == 0) {
+            insert(command, tableJS);
+        }
+        else if (command.find("DELETE") == 0) {
+            del(command, tableJS);
+        }
+        else if (command.find("SELECT") == 0) {
+            select(command, tableJS);
+        }
+        else {
+            cerr << "Incorrect command.\n";
+        }
     }
     return 0;
 }
