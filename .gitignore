@@ -24,3 +24,4 @@ laba4/task1/mutex+.out
 laba4/task1/semaphoreSlim.out
 laba4/task1/barrier.out
 laba4/task1/spinLock.out
+laba4/task1/spinWait.out
