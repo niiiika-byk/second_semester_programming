@@ -14,6 +14,7 @@ void generate_random_mutex(int thread_id, int num_chars) {
 
     std::lock_guard<std::mutex> lock(mutex);
     std::cout << "Thread " << thread_id << ": " << chars << std::endl;
+    mutex.unlock();
 }
 
 void benchmark_mutex(int num_threads, int num_chars) {
