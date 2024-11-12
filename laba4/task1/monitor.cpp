@@ -6,6 +6,9 @@
 #include <mutex>
 #include <condition_variable>
 
+//Monitor — примитив синхронизации, который позволяет потокам блокировать доступ к общему ресурсу,
+//объединяет mutex и условную переменную.
+
 class Monitor {
 public:
     void lock() {
