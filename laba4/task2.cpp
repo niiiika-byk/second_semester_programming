@@ -14,6 +14,18 @@ void students_to_deduction(const std::vector<Student>& students, std::vector<std
     result.insert(result.end(), local_result.begin(), local_result.end());
 }
 
+std::string generate_random_name() {
+    const std::vector<std::string> names = {
+        "Иванов", "Петров", "Сидоров", "Козлов", "Смирнов",
+        "Кузнецов", "Васильев", "Михайлов", "Николаев", "Дмитриев",
+        "Александров", "Владимиров", "Сергеев", "Андреев", "Максимов",
+        "Егоров", "Алексеев", "Артемьев", "Александрова", "Еленивская"
+    };
+    static std::mt19937 rng(std::random_device{}()); // Генератор случайных чисел
+    std::uniform_int_distribution<int> dist(0, names.size() - 1);
+    return names[dist(rng)];
+}
+
 void single_thread(const std::vector<Student>& students, std::vector<std::string>& result, int Z, int K) {
     students_to_deduction(students, result, Z, K, 0, students.size());
 }

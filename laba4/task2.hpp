@@ -6,6 +6,7 @@
 #include <chrono>
 #include <string>
 #include <mutex>
+#include <random>
 
 class Student {
 public:
@@ -18,6 +19,7 @@ public:
     ~Student() = default;
 };
 
+std::string generate_random_name();
 void students_to_deduction(const std::vector<Student>& students, std::vector<std::string>& result, int Z, int K, int start, int end);
 void single_thread(const std::vector<Student>& students, std::vector<std::string>& result, int Z, int K);
 void multi_thread(const std::vector<Student>& students, std::vector<std::string>& result, int Z, int K, int num_threads);
