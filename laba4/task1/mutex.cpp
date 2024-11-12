@@ -1,5 +1,7 @@
 #include "thread.hpp"
 
+//Mutex – примитив синхронизации, используется для блокаровки при доступе к общему ресурсу. 
+//Позволяет только ОДНОМУ потоку в данный момент владеть ресурсом. 
 std::mutex mutex;
 
 void generate_random_mutex(int thread_id, int num_chars) {
