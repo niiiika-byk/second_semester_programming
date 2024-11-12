@@ -18,7 +18,7 @@ int main() {
 
     // Заполнение вектора случайными данными
     for (int i = 0; i < num_students; ++i) {
-        students.push_back({generate_random_name(), rand() % 6 + 1, rand() % 4}); // Курс от 1 до 5, задолженности от 0 до 3
+        students.push_back({generate_random_name(), rand() % 6 + 1, rand() % 6}); // Курс от 1 до 5, задолженности от 0 до 5
     }
 
     std::vector<std::string> result_single;
@@ -36,17 +36,17 @@ int main() {
     auto time_multi = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
     std::cout << "Время многопоточной обработки: " << time_multi / 1'000'000.0 << " секунд\n";
 
-    std::cout << "Студенты на отчисление (однопоточная обработка):\n";
-    for (const auto& name : result_single) {
-        std::cout << " " << name << " ";
-    }
-    std::cout << "\n";
+    // std::cout << "Студенты на отчисление (однопоточная обработка):\n";
+    // for (const auto& name : result_single) {
+    //     std::cout << " " << name << " ";
+    // }
+    // std::cout << "\n";
 
-    std::cout << "Студенты на отчисление (многопоточная обработка):\n";
-    for (const auto& name : result_multi) {
-        std::cout << " " << name << " ";
-    }
-    std::cout << "\n";
+    // std::cout << "Студенты на отчисление (многопоточная обработка):\n";
+    // for (const auto& name : result_multi) {
+    //     std::cout << " " << name << " ";
+    // }
+    // std::cout << "\n";
 
     return 0;
 }
