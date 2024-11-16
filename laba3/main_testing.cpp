@@ -129,8 +129,8 @@ int main(){
     table.insert(2, "two");
     table.insert(3, "three");//заполнение
 
-    std::string value;
-    if (table.get_value(3) == "three") {
+    std::string value = table.get_value(3);
+    if (value == "three") {
         std::cout << "Value for key 3: " << value << std::endl;
     } else {
         std::cout << "Key 3 not found" << std::endl;
@@ -138,7 +138,8 @@ int main(){
 
     table.remove(2);
 
-    if (table.get_value(2) == "two") {
+    value = table.get_value(2);
+    if (value == "two") {
         std::cout << "Value for key 2: " << value << std::endl;
     } else {
         std::cout << "Key 2 not found" << std::endl;
@@ -146,7 +147,8 @@ int main(){
 
     table.insert(1, "new one");
 
-    if (table.get_value(1) == "new one") {
+    value = table.get_value(1);
+    if (value == "new one") {
         std::cout << "Value for key 1: " << value << std::endl;
     } else {
         std::cout << "Key 1 not found" << std::endl;

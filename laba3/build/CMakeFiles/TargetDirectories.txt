@@ -1,0 +1,7 @@
+/home/businka/second_semester_programming/laba3/build/CMakeFiles/testing.dir
+/home/businka/second_semester_programming/laba3/build/CMakeFiles/edit_cache.dir
+/home/businka/second_semester_programming/laba3/build/CMakeFiles/rebuild_cache.dir
+/home/businka/second_semester_programming/laba3/build/CMakeFiles/list_install_components.dir
+/home/businka/second_semester_programming/laba3/build/CMakeFiles/install.dir
+/home/businka/second_semester_programming/laba3/build/CMakeFiles/install/local.dir
+/home/businka/second_semester_programming/laba3/build/CMakeFiles/install/strip.dir
