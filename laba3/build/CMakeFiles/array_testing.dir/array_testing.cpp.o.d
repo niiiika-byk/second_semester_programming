@@ -1,5 +1,5 @@
-CMakeFiles/main_testing.dir/main_testing.cpp.o: \
- /home/businka/second_semester_programming/laba3/main_testing.cpp \
+CMakeFiles/array_testing.dir/array_testing.cpp.o: \
+ /home/businka/second_semester_programming/laba3/array_testing.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -254,13 +254,4 @@ CMakeFiles/main_testing.dir/main_testing.cpp.o: \
  /usr/include/c++/11/fstream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
- /usr/include/c++/11/bits/fstream.tcc \
- /home/businka/second_semester_programming/laba3/List.hpp \
- /home/businka/second_semester_programming/laba3/Node.hpp \
- /home/businka/second_semester_programming/laba3/Queue.hpp \
- /home/businka/second_semester_programming/laba3/Stack.hpp \
- /home/businka/second_semester_programming/laba3/HashTable.hpp \
- /home/businka/second_semester_programming/laba3/hash_node.hpp \
- /home/businka/second_semester_programming/laba3/hash_function.hpp \
- /home/businka/second_semester_programming/laba3/CB_tree.hpp \
- /home/businka/second_semester_programming/laba3/tree_node.hpp
+ /usr/include/c++/11/bits/fstream.tcc

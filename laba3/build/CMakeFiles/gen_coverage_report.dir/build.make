@@ -69,7 +69,7 @@ include CMakeFiles/gen_coverage_report.dir/progress.make
 CMakeFiles/gen_coverage_report:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/businka/second_semester_programming/laba3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating coverage report"
 	lcov --capture --directory . --output-file coverage.info
-	genhtml coverage.info --output-directory out --ignore-errors mismatch
+	genhtml coverage.info --output-directory out
 
 gen_coverage_report: CMakeFiles/gen_coverage_report
 gen_coverage_report: CMakeFiles/gen_coverage_report.dir/build.make

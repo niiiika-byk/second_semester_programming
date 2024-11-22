@@ -1,10 +1,10 @@
-Start testing: Nov 22 19:00 +07
+Start testing: Nov 22 19:10 +07
 ----------------------------------------------------------
-1/1 Testing: test
-1/1 Test: test
-Command: "/home/businka/second_semester_programming/laba3/build/main_testing"
+1/1 Testing: test1
+1/1 Test: test1
+Command: "/home/businka/second_semester_programming/laba3/build/array_testing"
 Directory: /home/businka/second_semester_programming/laba3/build
-"test" start time: Nov 22 19:00 +07
+"test1" start time: Nov 22 19:10 +07
 Output:
 ----------------------------------------------------------
 [==========] Running 17 tests from 1 test suite.
@@ -58,13 +58,12 @@ Array is empty, cannot pop back.
 [----------] Global test environment tear-down
 [==========] 17 tests from 1 test suite ran. (0 ms total)
 [  PASSED  ] 17 tests.
-libgcov profiling error:/home/businka/second_semester_programming/laba3/build/CMakeFiles/main_testing.dir/main_testing.cpp.gcda:overwriting an existing profile data with a different timestamp
 <end of output>
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test" end time: Nov 22 19:00 +07
-"test" time elapsed: 00:00:00
+"test1" end time: Nov 22 19:10 +07
+"test1" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Nov 22 19:00 +07
+End testing: Nov 22 19:10 +07

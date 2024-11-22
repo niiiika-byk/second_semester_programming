@@ -1,0 +1,1 @@
+/usr/bin/c++  -fprofile-arcs -ftest-coverage CMakeFiles/array_testing.dir/array_testing.cpp.o -o array_testing  /usr/lib/x86_64-linux-gnu/libgtest.a -lpthread 

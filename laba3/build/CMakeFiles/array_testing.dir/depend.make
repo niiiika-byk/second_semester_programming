@@ -1,2 +1,2 @@
-# Empty dependencies file for main_testing.
+# Empty dependencies file for array_testing.
 # This may be replaced when dependencies are built.

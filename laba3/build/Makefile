@@ -172,17 +172,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named main_testing
+# Target rules for targets named array_testing
 
 # Build rule for target.
-main_testing: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main_testing
-.PHONY : main_testing
+array_testing: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 array_testing
+.PHONY : array_testing
 
 # fast build rule for target.
-main_testing/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_testing.dir/build.make CMakeFiles/main_testing.dir/build
-.PHONY : main_testing/fast
+array_testing/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/array_testing.dir/build.make CMakeFiles/array_testing.dir/build
+.PHONY : array_testing/fast
 
 #=============================================================================
 # Target rules for targets named coverage
@@ -210,29 +210,29 @@ gen_coverage_report/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gen_coverage_report.dir/build.make CMakeFiles/gen_coverage_report.dir/build
 .PHONY : gen_coverage_report/fast
 
-main_testing.o: main_testing.cpp.o
-.PHONY : main_testing.o
+array_testing.o: array_testing.cpp.o
+.PHONY : array_testing.o
 
 # target to build an object file
-main_testing.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_testing.dir/build.make CMakeFiles/main_testing.dir/main_testing.cpp.o
-.PHONY : main_testing.cpp.o
+array_testing.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/array_testing.dir/build.make CMakeFiles/array_testing.dir/array_testing.cpp.o
+.PHONY : array_testing.cpp.o
 
-main_testing.i: main_testing.cpp.i
-.PHONY : main_testing.i
+array_testing.i: array_testing.cpp.i
+.PHONY : array_testing.i
 
 # target to preprocess a source file
-main_testing.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_testing.dir/build.make CMakeFiles/main_testing.dir/main_testing.cpp.i
-.PHONY : main_testing.cpp.i
+array_testing.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/array_testing.dir/build.make CMakeFiles/array_testing.dir/array_testing.cpp.i
+.PHONY : array_testing.cpp.i
 
-main_testing.s: main_testing.cpp.s
-.PHONY : main_testing.s
+array_testing.s: array_testing.cpp.s
+.PHONY : array_testing.s
 
 # target to generate assembly for a file
-main_testing.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_testing.dir/build.make CMakeFiles/main_testing.dir/main_testing.cpp.s
-.PHONY : main_testing.cpp.s
+array_testing.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/array_testing.dir/build.make CMakeFiles/array_testing.dir/array_testing.cpp.s
+.PHONY : array_testing.cpp.s
 
 # Help Target
 help:
@@ -249,10 +249,10 @@ help:
 	@echo "... test"
 	@echo "... coverage"
 	@echo "... gen_coverage_report"
-	@echo "... main_testing"
-	@echo "... main_testing.o"
-	@echo "... main_testing.i"
-	@echo "... main_testing.s"
+	@echo "... array_testing"
+	@echo "... array_testing.o"
+	@echo "... array_testing.i"
+	@echo "... array_testing.s"
 .PHONY : help
 
 

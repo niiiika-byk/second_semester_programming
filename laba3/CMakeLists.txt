@@ -12,15 +12,14 @@ set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
 
 aux_source_directory(. SOURCES)
 
-add_executable(main_testing main_testing.cpp Array.hpp List.hpp Queue.hpp hash_function.hpp CB_tree.hpp 
-HashTable.hpp Node.hpp hash_node.hpp Stack.hpp tree_node.hpp)
+add_executable(array_testing array_testing.cpp Array.hpp)
 
-target_link_libraries(main_testing ${GTEST_LIBRARIES} pthread)
+target_link_libraries(array_testing ${GTEST_LIBRARIES} pthread)
 
-install(TARGETS main_testing DESTINATION bin)
+install(TARGETS array_testing DESTINATION bin)
 
 enable_testing()
-add_test(test ./main_testing)
+add_test(test1 ./array_testing)
 
 # Сбор данных покрытия
 # параметры для сбора покрытия
@@ -34,7 +33,7 @@ add_custom_target(
 add_custom_target(
     gen_coverage_report
     COMMAND lcov --capture --directory . --output-file coverage.info
-    COMMAND genhtml coverage.info --output-directory out --ignore-errors mismatch
+    COMMAND genhtml coverage.info --output-directory out
     DEPENDS coverage
     COMMENT "Generating coverage report"
 )

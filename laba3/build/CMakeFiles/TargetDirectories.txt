@@ -1,4 +1,4 @@
-/home/businka/second_semester_programming/laba3/build/CMakeFiles/main_testing.dir
+/home/businka/second_semester_programming/laba3/build/CMakeFiles/array_testing.dir
 /home/businka/second_semester_programming/laba3/build/CMakeFiles/coverage.dir
 /home/businka/second_semester_programming/laba3/build/CMakeFiles/gen_coverage_report.dir
 /home/businka/second_semester_programming/laba3/build/CMakeFiles/test.dir
