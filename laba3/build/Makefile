@@ -211,6 +211,19 @@ list_testing/fast:
 .PHONY : 2list_testing/fast
 
 #=============================================================================
+# Target rules for targets named stack_testing
+
+# Build rule for target.
+stack_testing: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 stack_testing
+.PHONY : stack_testing
+
+# fast build rule for target.
+stack_testing/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stack_testing.dir/build.make CMakeFiles/stack_testing.dir/build
+.PHONY : stack_testing/fast
+
+#=============================================================================
 # Target rules for targets named coverage
 
 # Build rule for target.
@@ -308,6 +321,30 @@ list_testing.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_testing.dir/build.make CMakeFiles/list_testing.dir/list_testing.cpp.s
 .PHONY : list_testing.cpp.s
 
+stack_testing.o: stack_testing.cpp.o
+.PHONY : stack_testing.o
+
+# target to build an object file
+stack_testing.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stack_testing.dir/build.make CMakeFiles/stack_testing.dir/stack_testing.cpp.o
+.PHONY : stack_testing.cpp.o
+
+stack_testing.i: stack_testing.cpp.i
+.PHONY : stack_testing.i
+
+# target to preprocess a source file
+stack_testing.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stack_testing.dir/build.make CMakeFiles/stack_testing.dir/stack_testing.cpp.i
+.PHONY : stack_testing.cpp.i
+
+stack_testing.s: stack_testing.cpp.s
+.PHONY : stack_testing.s
+
+# target to generate assembly for a file
+stack_testing.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stack_testing.dir/build.make CMakeFiles/stack_testing.dir/stack_testing.cpp.s
+.PHONY : stack_testing.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -326,6 +363,7 @@ help:
 	@echo "... 2list_testing"
 	@echo "... array_testing"
 	@echo "... list_testing"
+	@echo "... stack_testing"
 	@echo "... 2list_testing.o"
 	@echo "... 2list_testing.i"
 	@echo "... 2list_testing.s"
@@ -335,6 +373,9 @@ help:
 	@echo "... list_testing.o"
 	@echo "... list_testing.i"
 	@echo "... list_testing.s"
+	@echo "... stack_testing.o"
+	@echo "... stack_testing.i"
+	@echo "... stack_testing.s"
 .PHONY : help
 
 
