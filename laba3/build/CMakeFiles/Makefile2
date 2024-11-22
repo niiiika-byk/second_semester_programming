@@ -64,6 +64,7 @@ CMAKE_BINARY_DIR = /home/businka/second_semester_programming/laba3/build
 
 # The main recursive "all" target.
 all: CMakeFiles/array_testing.dir/all
+all: CMakeFiles/list_testing.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -72,6 +73,7 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/array_testing.dir/clean
+clean: CMakeFiles/list_testing.dir/clean
 clean: CMakeFiles/coverage.dir/clean
 clean: CMakeFiles/gen_coverage_report.dir/clean
 .PHONY : clean
@@ -101,6 +103,32 @@ array_testing: CMakeFiles/array_testing.dir/rule
 CMakeFiles/array_testing.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/array_testing.dir/build.make CMakeFiles/array_testing.dir/clean
 .PHONY : CMakeFiles/array_testing.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/list_testing.dir
+
+# All Build rule for target.
+CMakeFiles/list_testing.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_testing.dir/build.make CMakeFiles/list_testing.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_testing.dir/build.make CMakeFiles/list_testing.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/businka/second_semester_programming/laba3/build/CMakeFiles --progress-num=4,5 "Built target list_testing"
+.PHONY : CMakeFiles/list_testing.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/list_testing.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/businka/second_semester_programming/laba3/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/list_testing.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/businka/second_semester_programming/laba3/build/CMakeFiles 0
+.PHONY : CMakeFiles/list_testing.dir/rule
+
+# Convenience name for target.
+list_testing: CMakeFiles/list_testing.dir/rule
+.PHONY : list_testing
+
+# clean rule for target.
+CMakeFiles/list_testing.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_testing.dir/build.make CMakeFiles/list_testing.dir/clean
+.PHONY : CMakeFiles/list_testing.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/coverage.dir

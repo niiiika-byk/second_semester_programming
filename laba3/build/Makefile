@@ -185,6 +185,19 @@ array_testing/fast:
 .PHONY : array_testing/fast
 
 #=============================================================================
+# Target rules for targets named list_testing
+
+# Build rule for target.
+list_testing: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 list_testing
+.PHONY : list_testing
+
+# fast build rule for target.
+list_testing/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_testing.dir/build.make CMakeFiles/list_testing.dir/build
+.PHONY : list_testing/fast
+
+#=============================================================================
 # Target rules for targets named coverage
 
 # Build rule for target.
@@ -234,6 +247,30 @@ array_testing.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/array_testing.dir/build.make CMakeFiles/array_testing.dir/array_testing.cpp.s
 .PHONY : array_testing.cpp.s
 
+list_testing.o: list_testing.cpp.o
+.PHONY : list_testing.o
+
+# target to build an object file
+list_testing.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_testing.dir/build.make CMakeFiles/list_testing.dir/list_testing.cpp.o
+.PHONY : list_testing.cpp.o
+
+list_testing.i: list_testing.cpp.i
+.PHONY : list_testing.i
+
+# target to preprocess a source file
+list_testing.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_testing.dir/build.make CMakeFiles/list_testing.dir/list_testing.cpp.i
+.PHONY : list_testing.cpp.i
+
+list_testing.s: list_testing.cpp.s
+.PHONY : list_testing.s
+
+# target to generate assembly for a file
+list_testing.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_testing.dir/build.make CMakeFiles/list_testing.dir/list_testing.cpp.s
+.PHONY : list_testing.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -250,9 +287,13 @@ help:
 	@echo "... coverage"
 	@echo "... gen_coverage_report"
 	@echo "... array_testing"
+	@echo "... list_testing"
 	@echo "... array_testing.o"
 	@echo "... array_testing.i"
 	@echo "... array_testing.s"
+	@echo "... list_testing.o"
+	@echo "... list_testing.i"
+	@echo "... list_testing.s"
 .PHONY : help
 
 

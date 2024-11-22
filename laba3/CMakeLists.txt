@@ -13,13 +13,17 @@ set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
 aux_source_directory(. SOURCES)
 
 add_executable(array_testing array_testing.cpp Array.hpp)
+add_executable(list_testing list_testing.cpp List.hpp)
 
-target_link_libraries(array_testing ${GTEST_LIBRARIES} pthread)
+target_link_libraries(array_testing  ${GTEST_LIBRARIES} pthread)
+target_link_libraries(list_testing ${GTEST_LIBRARIES} pthread)
 
 install(TARGETS array_testing DESTINATION bin)
+install(TARGETS list_testing DESTINATION bin)
 
 enable_testing()
 add_test(test1 ./array_testing)
+add_test(test2 ./list_testing)
 
 # Сбор данных покрытия
 # параметры для сбора покрытия
