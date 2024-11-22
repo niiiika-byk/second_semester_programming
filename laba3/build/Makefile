@@ -224,6 +224,19 @@ stack_testing/fast:
 .PHONY : stack_testing/fast
 
 #=============================================================================
+# Target rules for targets named queue_testing
+
+# Build rule for target.
+queue_testing: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 queue_testing
+.PHONY : queue_testing
+
+# fast build rule for target.
+queue_testing/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/queue_testing.dir/build.make CMakeFiles/queue_testing.dir/build
+.PHONY : queue_testing/fast
+
+#=============================================================================
 # Target rules for targets named coverage
 
 # Build rule for target.
@@ -321,6 +334,30 @@ list_testing.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/list_testing.dir/build.make CMakeFiles/list_testing.dir/list_testing.cpp.s
 .PHONY : list_testing.cpp.s
 
+queue_testing.o: queue_testing.cpp.o
+.PHONY : queue_testing.o
+
+# target to build an object file
+queue_testing.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/queue_testing.dir/build.make CMakeFiles/queue_testing.dir/queue_testing.cpp.o
+.PHONY : queue_testing.cpp.o
+
+queue_testing.i: queue_testing.cpp.i
+.PHONY : queue_testing.i
+
+# target to preprocess a source file
+queue_testing.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/queue_testing.dir/build.make CMakeFiles/queue_testing.dir/queue_testing.cpp.i
+.PHONY : queue_testing.cpp.i
+
+queue_testing.s: queue_testing.cpp.s
+.PHONY : queue_testing.s
+
+# target to generate assembly for a file
+queue_testing.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/queue_testing.dir/build.make CMakeFiles/queue_testing.dir/queue_testing.cpp.s
+.PHONY : queue_testing.cpp.s
+
 stack_testing.o: stack_testing.cpp.o
 .PHONY : stack_testing.o
 
@@ -363,6 +400,7 @@ help:
 	@echo "... 2list_testing"
 	@echo "... array_testing"
 	@echo "... list_testing"
+	@echo "... queue_testing"
 	@echo "... stack_testing"
 	@echo "... 2list_testing.o"
 	@echo "... 2list_testing.i"
@@ -373,6 +411,9 @@ help:
 	@echo "... list_testing.o"
 	@echo "... list_testing.i"
 	@echo "... list_testing.s"
+	@echo "... queue_testing.o"
+	@echo "... queue_testing.i"
+	@echo "... queue_testing.s"
 	@echo "... stack_testing.o"
 	@echo "... stack_testing.i"
 	@echo "... stack_testing.s"

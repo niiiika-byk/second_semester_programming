@@ -61,6 +61,7 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/list_testing.dir/DependInfo.cmake"
   "CMakeFiles/2list_testing.dir/DependInfo.cmake"
   "CMakeFiles/stack_testing.dir/DependInfo.cmake"
+  "CMakeFiles/queue_testing.dir/DependInfo.cmake"
   "CMakeFiles/coverage.dir/DependInfo.cmake"
   "CMakeFiles/gen_coverage_report.dir/DependInfo.cmake"
   )

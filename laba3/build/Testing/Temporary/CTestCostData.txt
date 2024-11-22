@@ -3,4 +3,9 @@ test1 74 2.31924e-05
 test2 45 5.93916e-05
 test3 15 0.000184212
 test4 3 0.000949184
+array_testing 3 0.000523709
+list_testing 3 0.000749094
+2list_testing 3 0.00121397
+stack_testing 3 0.00107566
+queue_testing 2 0.0009687
 ---

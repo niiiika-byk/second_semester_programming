@@ -66,10 +66,11 @@ include CMakeFiles/coverage.dir/compiler_depend.make
 # Include the progress variables for this target.
 include CMakeFiles/coverage.dir/progress.make
 
-CMakeFiles/coverage: test1_app
-CMakeFiles/coverage: test2_app
-CMakeFiles/coverage: test3_app
-CMakeFiles/coverage: test4_app
+CMakeFiles/coverage: ../array_testing.cpp
+CMakeFiles/coverage: ../list_testing.cpp
+CMakeFiles/coverage: ../2list_testing.cpp
+CMakeFiles/coverage: ../stack_testing.cpp
+CMakeFiles/coverage: ../queue_testing.cpp
 	/usr/bin/ctest --coverage --output-on-failure
 
 coverage: CMakeFiles/coverage

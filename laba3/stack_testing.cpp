@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "Stack.hpp"  // Include your Stack implementation
+#include "Stack.hpp"
 
 class StackTest : public ::testing::Test {
 protected:

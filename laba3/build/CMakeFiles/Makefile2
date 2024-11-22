@@ -67,6 +67,7 @@ all: CMakeFiles/array_testing.dir/all
 all: CMakeFiles/list_testing.dir/all
 all: CMakeFiles/2list_testing.dir/all
 all: CMakeFiles/stack_testing.dir/all
+all: CMakeFiles/queue_testing.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -78,6 +79,7 @@ clean: CMakeFiles/array_testing.dir/clean
 clean: CMakeFiles/list_testing.dir/clean
 clean: CMakeFiles/2list_testing.dir/clean
 clean: CMakeFiles/stack_testing.dir/clean
+clean: CMakeFiles/queue_testing.dir/clean
 clean: CMakeFiles/coverage.dir/clean
 clean: CMakeFiles/gen_coverage_report.dir/clean
 .PHONY : clean
@@ -167,7 +169,7 @@ CMakeFiles/2list_testing.dir/clean:
 CMakeFiles/stack_testing.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/stack_testing.dir/build.make CMakeFiles/stack_testing.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/stack_testing.dir/build.make CMakeFiles/stack_testing.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/businka/second_semester_programming/laba3/build/CMakeFiles --progress-num=8,9 "Built target stack_testing"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/businka/second_semester_programming/laba3/build/CMakeFiles --progress-num=10,11 "Built target stack_testing"
 .PHONY : CMakeFiles/stack_testing.dir/all
 
 # Build rule for subdir invocation for target.
@@ -185,6 +187,32 @@ stack_testing: CMakeFiles/stack_testing.dir/rule
 CMakeFiles/stack_testing.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/stack_testing.dir/build.make CMakeFiles/stack_testing.dir/clean
 .PHONY : CMakeFiles/stack_testing.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/queue_testing.dir
+
+# All Build rule for target.
+CMakeFiles/queue_testing.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/queue_testing.dir/build.make CMakeFiles/queue_testing.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/queue_testing.dir/build.make CMakeFiles/queue_testing.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/businka/second_semester_programming/laba3/build/CMakeFiles --progress-num=8,9 "Built target queue_testing"
+.PHONY : CMakeFiles/queue_testing.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/queue_testing.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/businka/second_semester_programming/laba3/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/queue_testing.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/businka/second_semester_programming/laba3/build/CMakeFiles 0
+.PHONY : CMakeFiles/queue_testing.dir/rule
+
+# Convenience name for target.
+queue_testing: CMakeFiles/queue_testing.dir/rule
+.PHONY : queue_testing
+
+# clean rule for target.
+CMakeFiles/queue_testing.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/queue_testing.dir/build.make CMakeFiles/queue_testing.dir/clean
+.PHONY : CMakeFiles/queue_testing.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/coverage.dir

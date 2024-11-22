@@ -1,10 +1,10 @@
-Start testing: Nov 22 22:02 +07
+Start testing: Nov 22 22:12 +07
 ----------------------------------------------------------
-1/4 Testing: test1
-1/4 Test: test1
+1/5 Testing: array_testing
+1/5 Test: array_testing
 Command: "/home/businka/second_semester_programming/laba3/build/array_testing"
 Directory: /home/businka/second_semester_programming/laba3/build
-"test1" start time: Nov 22 22:02 +07
+"array_testing" start time: Nov 22 22:12 +07
 Output:
 ----------------------------------------------------------
 [==========] Running 17 tests from 1 test suite.
@@ -62,15 +62,15 @@ Array is empty, cannot pop back.
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test1" end time: Nov 22 22:02 +07
-"test1" time elapsed: 00:00:00
+"array_testing" end time: Nov 22 22:12 +07
+"array_testing" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-2/4 Testing: test2
-2/4 Test: test2
+2/5 Testing: list_testing
+2/5 Test: list_testing
 Command: "/home/businka/second_semester_programming/laba3/build/list_testing"
 Directory: /home/businka/second_semester_programming/laba3/build
-"test2" start time: Nov 22 22:02 +07
+"list_testing" start time: Nov 22 22:12 +07
 Output:
 ----------------------------------------------------------
 [==========] Running 24 tests from 1 test suite.
@@ -135,15 +135,15 @@ List is empty
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test2" end time: Nov 22 22:02 +07
-"test2" time elapsed: 00:00:00
+"list_testing" end time: Nov 22 22:12 +07
+"list_testing" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-3/4 Testing: test3
-3/4 Test: test3
+3/5 Testing: 2list_testing
+3/5 Test: 2list_testing
 Command: "/home/businka/second_semester_programming/laba3/build/2list_testing"
 Directory: /home/businka/second_semester_programming/laba3/build
-"test3" start time: Nov 22 22:02 +07
+"2list_testing" start time: Nov 22 22:12 +07
 Output:
 ----------------------------------------------------------
 [==========] Running 18 tests from 1 test suite.
@@ -194,15 +194,15 @@ Output:
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test3" end time: Nov 22 22:02 +07
-"test3" time elapsed: 00:00:00
+"2list_testing" end time: Nov 22 22:12 +07
+"2list_testing" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-4/4 Testing: test4
-4/4 Test: test4
+4/5 Testing: stack_testing
+4/5 Test: stack_testing
 Command: "/home/businka/second_semester_programming/laba3/build/stack_testing"
 Directory: /home/businka/second_semester_programming/laba3/build
-"test4" start time: Nov 22 22:02 +07
+"stack_testing" start time: Nov 22 22:12 +07
 Output:
 ----------------------------------------------------------
 [==========] Running 9 tests from 1 test suite.
@@ -231,13 +231,50 @@ Output:
 [----------] Global test environment tear-down
 [==========] 9 tests from 1 test suite ran. (0 ms total)
 [  PASSED  ] 9 tests.
-libgcov profiling error:/home/businka/second_semester_programming/laba3/build/CMakeFiles/stack_testing.dir/stack_testing.cpp.gcda:overwriting an existing profile data with a different timestamp
 <end of output>
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test4" end time: Nov 22 22:02 +07
-"test4" time elapsed: 00:00:00
+"stack_testing" end time: Nov 22 22:12 +07
+"stack_testing" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Nov 22 22:02 +07
+5/5 Testing: queue_testing
+5/5 Test: queue_testing
+Command: "/home/businka/second_semester_programming/laba3/build/queue_testing"
+Directory: /home/businka/second_semester_programming/laba3/build
+"queue_testing" start time: Nov 22 22:12 +07
+Output:
+----------------------------------------------------------
+[==========] Running 7 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 7 tests from QueueTest
+[ RUN      ] QueueTest.PushAndDisplay
+[       OK ] QueueTest.PushAndDisplay (0 ms)
+[ RUN      ] QueueTest.Pop
+[       OK ] QueueTest.Pop (0 ms)
+[ RUN      ] QueueTest.PopEmptyQueue
+[       OK ] QueueTest.PopEmptyQueue (0 ms)
+[ RUN      ] QueueTest.PopUntilEmpty
+[       OK ] QueueTest.PopUntilEmpty (0 ms)
+[ RUN      ] QueueTest.SearchFound
+[       OK ] QueueTest.SearchFound (0 ms)
+[ RUN      ] QueueTest.SearchNotFound
+[       OK ] QueueTest.SearchNotFound (0 ms)
+[ RUN      ] QueueTest.DisplayEmptyQueue
+[       OK ] QueueTest.DisplayEmptyQueue (0 ms)
+[----------] 7 tests from QueueTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 7 tests from 1 test suite ran. (0 ms total)
+[  PASSED  ] 7 tests.
+libgcov profiling error:/home/businka/second_semester_programming/laba3/build/CMakeFiles/queue_testing.dir/queue_testing.cpp.gcda:overwriting an existing profile data with a different timestamp
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"queue_testing" end time: Nov 22 22:12 +07
+"queue_testing" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 22 22:12 +07

@@ -65,41 +65,6 @@ public:
         std::cout << std::endl;
     }
 
-    void load_from_file(std::string filename) {
-        while (head) { // очищаем текущий лист
-            pop();
-        }
-        head = nullptr; // Обновляем указатели
-        tail = nullptr;
-
-        std::ifstream file(filename);
-        if (!file) {
-            std::cout << "File not found" << std::endl;
-            return;
-        }
-
-        std::string line;
-        while (getline(file, line)) {
-            push(line); // добавляем в конец массива
-        }
-        file.close();
-    }
-
-    void save_to_file(std::string filename) {
-        std::ofstream file(filename);
-        if (!file) {
-            std::cout << "File not found" << std::endl;
-            return;
-        }
-
-        Node<Data>* current = head;
-        while (current != nullptr) {
-            file << current->data << std::endl;
-            current = current->next;
-        }
-        file.close();
-    }
-
 private:
     Node<Data>* head;
     Node<Data>* tail;
