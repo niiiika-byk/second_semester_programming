@@ -65,6 +65,16 @@ CMAKE_BINARY_DIR = /home/businka/second_semester_programming/laba3/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -162,24 +172,50 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named testing
+# Target rules for targets named main_testing
 
 # Build rule for target.
-testing: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 testing
-.PHONY : testing
+main_testing: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main_testing
+.PHONY : main_testing
 
 # fast build rule for target.
-testing/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/testing.dir/build.make CMakeFiles/testing.dir/build
-.PHONY : testing/fast
+main_testing/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_testing.dir/build.make CMakeFiles/main_testing.dir/build
+.PHONY : main_testing/fast
+
+#=============================================================================
+# Target rules for targets named coverage
+
+# Build rule for target.
+coverage: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 coverage
+.PHONY : coverage
+
+# fast build rule for target.
+coverage/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/coverage.dir/build.make CMakeFiles/coverage.dir/build
+.PHONY : coverage/fast
+
+#=============================================================================
+# Target rules for targets named gen_coverage_report
+
+# Build rule for target.
+gen_coverage_report: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gen_coverage_report
+.PHONY : gen_coverage_report
+
+# fast build rule for target.
+gen_coverage_report/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gen_coverage_report.dir/build.make CMakeFiles/gen_coverage_report.dir/build
+.PHONY : gen_coverage_report/fast
 
 main_testing.o: main_testing.cpp.o
 .PHONY : main_testing.o
 
 # target to build an object file
 main_testing.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/testing.dir/build.make CMakeFiles/testing.dir/main_testing.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_testing.dir/build.make CMakeFiles/main_testing.dir/main_testing.cpp.o
 .PHONY : main_testing.cpp.o
 
 main_testing.i: main_testing.cpp.i
@@ -187,7 +223,7 @@ main_testing.i: main_testing.cpp.i
 
 # target to preprocess a source file
 main_testing.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/testing.dir/build.make CMakeFiles/testing.dir/main_testing.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_testing.dir/build.make CMakeFiles/main_testing.dir/main_testing.cpp.i
 .PHONY : main_testing.cpp.i
 
 main_testing.s: main_testing.cpp.s
@@ -195,7 +231,7 @@ main_testing.s: main_testing.cpp.s
 
 # target to generate assembly for a file
 main_testing.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/testing.dir/build.make CMakeFiles/testing.dir/main_testing.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_testing.dir/build.make CMakeFiles/main_testing.dir/main_testing.cpp.s
 .PHONY : main_testing.cpp.s
 
 # Help Target
@@ -210,7 +246,10 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... testing"
+	@echo "... test"
+	@echo "... coverage"
+	@echo "... gen_coverage_report"
+	@echo "... main_testing"
 	@echo "... main_testing.o"
 	@echo "... main_testing.i"
 	@echo "... main_testing.s"

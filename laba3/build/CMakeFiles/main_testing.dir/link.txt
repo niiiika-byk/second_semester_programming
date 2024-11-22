@@ -1,0 +1,1 @@
+/usr/bin/c++  -fprofile-arcs -ftest-coverage CMakeFiles/main_testing.dir/main_testing.cpp.o -o main_testing  /usr/lib/x86_64-linux-gnu/libgtest.a -lpthread 

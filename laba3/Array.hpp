@@ -108,21 +108,24 @@ public:
         size--;
     }
 
-    void search(const Data& value){
+    bool search(const Data& value){
         for (int i = 0; i < size; i++) {
             if (array[i] == value) {
                 std::cout << "Found!" << std::endl;
-                return;
+                return true;
             }
         }
         std::cout << "Not found!" << std::endl;
+        return false;
     }
 
-    void search_index(const int index){
+    bool search_index(const int index){
         if (index >= 0 && index < size) {
             std::cout << array[index] << std::endl;
+            return true;
         } else {
             std::cout << "Invalid index" << std::endl;
+            return false;
         }
     }
 
@@ -148,37 +151,6 @@ public:
             std::cout << array[i] << " ";
         }
         std::cout << std::endl;
-    }
-
-    //загрузка данных из файла
-    void load_from_file(const std::string& filename){
-        size = 0; // очищаем массив
-        std::ifstream file(filename);
-        if (!file.is_open()) {
-            std::cout << "File not found" << std::endl;
-            return;
-        }
-
-        std::string line;
-        while (getline(file, line)) {
-            push_back(line); // добавляем в конец массива
-        }
-        file.close();
-    }
-
-    //сохранение данных в файл
-    void save_to_file(const std::string& filename){
-
-        std::ofstream file(filename, std::ofstream::out | std::ios_base::trunc);
-        if (!file.is_open()) {
-            std::cout << "File created" << std::endl;
-            return;
-        }
-
-        for (int i = 0; i < size; i++) {
-            file << array[i] << std::endl;
-        }
-        file.close();
     }
 
 private:

@@ -1,4 +1,7 @@
-/home/businka/second_semester_programming/laba3/build/CMakeFiles/testing.dir
+/home/businka/second_semester_programming/laba3/build/CMakeFiles/main_testing.dir
+/home/businka/second_semester_programming/laba3/build/CMakeFiles/coverage.dir
+/home/businka/second_semester_programming/laba3/build/CMakeFiles/gen_coverage_report.dir
+/home/businka/second_semester_programming/laba3/build/CMakeFiles/test.dir
 /home/businka/second_semester_programming/laba3/build/CMakeFiles/edit_cache.dir
 /home/businka/second_semester_programming/laba3/build/CMakeFiles/rebuild_cache.dir
 /home/businka/second_semester_programming/laba3/build/CMakeFiles/list_install_components.dir

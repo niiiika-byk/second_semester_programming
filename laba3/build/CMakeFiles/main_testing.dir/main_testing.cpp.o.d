@@ -1,4 +1,4 @@
-CMakeFiles/testing.dir/main_testing.cpp.o: \
+CMakeFiles/main_testing.dir/main_testing.cpp.o: \
  /home/businka/second_semester_programming/laba3/main_testing.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
