@@ -1,8 +1,4 @@
-#include <iostream>
-#include <string>
-#include <sstream>
 #include <gtest/gtest.h>
-
 #include "List.hpp"
 
 using namespace std;
