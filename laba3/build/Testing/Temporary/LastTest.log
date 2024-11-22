@@ -1,10 +1,10 @@
-Start testing: Nov 22 22:12 +07
+Start testing: Nov 22 22:49 +07
 ----------------------------------------------------------
-1/5 Testing: array_testing
-1/5 Test: array_testing
+1/6 Testing: array_testing
+1/6 Test: array_testing
 Command: "/home/businka/second_semester_programming/laba3/build/array_testing"
 Directory: /home/businka/second_semester_programming/laba3/build
-"array_testing" start time: Nov 22 22:12 +07
+"array_testing" start time: Nov 22 22:49 +07
 Output:
 ----------------------------------------------------------
 [==========] Running 17 tests from 1 test suite.
@@ -62,15 +62,15 @@ Array is empty, cannot pop back.
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"array_testing" end time: Nov 22 22:12 +07
+"array_testing" end time: Nov 22 22:49 +07
 "array_testing" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-2/5 Testing: list_testing
-2/5 Test: list_testing
+2/6 Testing: list_testing
+2/6 Test: list_testing
 Command: "/home/businka/second_semester_programming/laba3/build/list_testing"
 Directory: /home/businka/second_semester_programming/laba3/build
-"list_testing" start time: Nov 22 22:12 +07
+"list_testing" start time: Nov 22 22:49 +07
 Output:
 ----------------------------------------------------------
 [==========] Running 24 tests from 1 test suite.
@@ -135,15 +135,15 @@ List is empty
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"list_testing" end time: Nov 22 22:12 +07
+"list_testing" end time: Nov 22 22:49 +07
 "list_testing" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-3/5 Testing: 2list_testing
-3/5 Test: 2list_testing
+3/6 Testing: 2list_testing
+3/6 Test: 2list_testing
 Command: "/home/businka/second_semester_programming/laba3/build/2list_testing"
 Directory: /home/businka/second_semester_programming/laba3/build
-"2list_testing" start time: Nov 22 22:12 +07
+"2list_testing" start time: Nov 22 22:49 +07
 Output:
 ----------------------------------------------------------
 [==========] Running 18 tests from 1 test suite.
@@ -194,15 +194,15 @@ Output:
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"2list_testing" end time: Nov 22 22:12 +07
+"2list_testing" end time: Nov 22 22:49 +07
 "2list_testing" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-4/5 Testing: stack_testing
-4/5 Test: stack_testing
+4/6 Testing: stack_testing
+4/6 Test: stack_testing
 Command: "/home/businka/second_semester_programming/laba3/build/stack_testing"
 Directory: /home/businka/second_semester_programming/laba3/build
-"stack_testing" start time: Nov 22 22:12 +07
+"stack_testing" start time: Nov 22 22:49 +07
 Output:
 ----------------------------------------------------------
 [==========] Running 9 tests from 1 test suite.
@@ -235,15 +235,15 @@ Output:
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"stack_testing" end time: Nov 22 22:12 +07
+"stack_testing" end time: Nov 22 22:49 +07
 "stack_testing" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-5/5 Testing: queue_testing
-5/5 Test: queue_testing
+5/6 Testing: queue_testing
+5/6 Test: queue_testing
 Command: "/home/businka/second_semester_programming/laba3/build/queue_testing"
 Directory: /home/businka/second_semester_programming/laba3/build
-"queue_testing" start time: Nov 22 22:12 +07
+"queue_testing" start time: Nov 22 22:49 +07
 Output:
 ----------------------------------------------------------
 [==========] Running 7 tests from 1 test suite.
@@ -268,13 +268,63 @@ Output:
 [----------] Global test environment tear-down
 [==========] 7 tests from 1 test suite ran. (0 ms total)
 [  PASSED  ] 7 tests.
-libgcov profiling error:/home/businka/second_semester_programming/laba3/build/CMakeFiles/queue_testing.dir/queue_testing.cpp.gcda:overwriting an existing profile data with a different timestamp
 <end of output>
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"queue_testing" end time: Nov 22 22:12 +07
+"queue_testing" end time: Nov 22 22:49 +07
 "queue_testing" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Nov 22 22:12 +07
+6/6 Testing: hashtable_testing
+6/6 Test: hashtable_testing
+Command: "/home/businka/second_semester_programming/laba3/build/hashtable_testing"
+Directory: /home/businka/second_semester_programming/laba3/build
+"hashtable_testing" start time: Nov 22 22:49 +07
+Output:
+----------------------------------------------------------
+[==========] Running 12 tests from 2 test suites.
+[----------] Global test environment set-up.
+[----------] 6 tests from HashMapTest
+[ RUN      ] HashMapTest.InsertAndGet
+[       OK ] HashMapTest.InsertAndGet (0 ms)
+[ RUN      ] HashMapTest.GetNonExistentKey
+[       OK ] HashMapTest.GetNonExistentKey (0 ms)
+[ RUN      ] HashMapTest.InsertDuplicateKey
+[       OK ] HashMapTest.InsertDuplicateKey (0 ms)
+[ RUN      ] HashMapTest.RemoveKey
+[       OK ] HashMapTest.RemoveKey (0 ms)
+[ RUN      ] HashMapTest.RemoveNonExistentKey
+[       OK ] HashMapTest.RemoveNonExistentKey (0 ms)
+[ RUN      ] HashMapTest.Display
+[       OK ] HashMapTest.Display (0 ms)
+[----------] 6 tests from HashMapTest (0 ms total)
+
+[----------] 6 tests from HashMapCollisionTest
+[ RUN      ] HashMapCollisionTest.GetValueWithCollision
+[       OK ] HashMapCollisionTest.GetValueWithCollision (0 ms)
+[ RUN      ] HashMapCollisionTest.GetNonExistentKey
+[       OK ] HashMapCollisionTest.GetNonExistentKey (0 ms)
+[ RUN      ] HashMapCollisionTest.RemoveMiddleElement
+[       OK ] HashMapCollisionTest.RemoveMiddleElement (0 ms)
+[ RUN      ] HashMapCollisionTest.RemoveHeadElement
+[       OK ] HashMapCollisionTest.RemoveHeadElement (0 ms)
+[ RUN      ] HashMapCollisionTest.RemoveTailElement
+[       OK ] HashMapCollisionTest.RemoveTailElement (0 ms)
+[ RUN      ] HashMapCollisionTest.RemoveNonExistentElement
+[       OK ] HashMapCollisionTest.RemoveNonExistentElement (0 ms)
+[----------] 6 tests from HashMapCollisionTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 12 tests from 2 test suites ran. (0 ms total)
+[  PASSED  ] 12 tests.
+libgcov profiling error:/home/businka/second_semester_programming/laba3/build/CMakeFiles/hashtable_testing.dir/hashtable_testing.cpp.gcda:overwriting an existing profile data with a different timestamp
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"hashtable_testing" end time: Nov 22 22:49 +07
+"hashtable_testing" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 22 22:49 +07

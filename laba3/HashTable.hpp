@@ -103,55 +103,6 @@ public:
         }
     }
 
-    void clear() {
-        for (unsigned long i = 0; i < table_size; i++) {
-            Hash_node<Key, Value> *entry = table[i];
-            while (entry != nullptr) {
-                Hash_node<Key, Value> *prev = entry;
-                entry = entry->get_next();
-                delete prev;
-            }
-            table[i] = nullptr;
-        }
-    }
-    void load_from_file(const std::string &filename) {
-        clear();
-        std::ifstream file(filename);
-        if (!file.is_open()) {
-            std::cerr << "Failed open file" << std::endl;
-            return;
-        }
-
-        std::string line;
-        while (std::getline(file, line)) {
-            std::istringstream iss(line);
-            Key key;
-            Value value;
-            iss >> key >> value;
-            insert(key, value);
-        }
-
-        file.close();
-    }
-
-    void save_to_file(const std::string &filename) {
-        std::ofstream file(filename);
-        if (!file.is_open()) {
-            std::cerr << "Failed open file" << std::endl;
-            return;
-        }
-
-        for (unsigned long i = 0; i < table_size; i++) {
-            Hash_node<Key, Value> *entry = table[i];
-            while (entry != nullptr) {
-                file << entry->get_key() << " " << entry->get_value() << std::endl;
-                entry = entry->get_next();
-            }
-        }
-
-        file.close();
-    }
-
 private:
     Hash_node<Key, Value>* table[table_size];
     Hash_func hash;

@@ -237,6 +237,19 @@ queue_testing/fast:
 .PHONY : queue_testing/fast
 
 #=============================================================================
+# Target rules for targets named hashtable_testing
+
+# Build rule for target.
+hashtable_testing: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 hashtable_testing
+.PHONY : hashtable_testing
+
+# fast build rule for target.
+hashtable_testing/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hashtable_testing.dir/build.make CMakeFiles/hashtable_testing.dir/build
+.PHONY : hashtable_testing/fast
+
+#=============================================================================
 # Target rules for targets named coverage
 
 # Build rule for target.
@@ -309,6 +322,30 @@ array_testing.s: array_testing.cpp.s
 array_testing.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/array_testing.dir/build.make CMakeFiles/array_testing.dir/array_testing.cpp.s
 .PHONY : array_testing.cpp.s
+
+hashtable_testing.o: hashtable_testing.cpp.o
+.PHONY : hashtable_testing.o
+
+# target to build an object file
+hashtable_testing.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hashtable_testing.dir/build.make CMakeFiles/hashtable_testing.dir/hashtable_testing.cpp.o
+.PHONY : hashtable_testing.cpp.o
+
+hashtable_testing.i: hashtable_testing.cpp.i
+.PHONY : hashtable_testing.i
+
+# target to preprocess a source file
+hashtable_testing.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hashtable_testing.dir/build.make CMakeFiles/hashtable_testing.dir/hashtable_testing.cpp.i
+.PHONY : hashtable_testing.cpp.i
+
+hashtable_testing.s: hashtable_testing.cpp.s
+.PHONY : hashtable_testing.s
+
+# target to generate assembly for a file
+hashtable_testing.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hashtable_testing.dir/build.make CMakeFiles/hashtable_testing.dir/hashtable_testing.cpp.s
+.PHONY : hashtable_testing.cpp.s
 
 list_testing.o: list_testing.cpp.o
 .PHONY : list_testing.o
@@ -399,6 +436,7 @@ help:
 	@echo "... gen_coverage_report"
 	@echo "... 2list_testing"
 	@echo "... array_testing"
+	@echo "... hashtable_testing"
 	@echo "... list_testing"
 	@echo "... queue_testing"
 	@echo "... stack_testing"
@@ -408,6 +446,9 @@ help:
 	@echo "... array_testing.o"
 	@echo "... array_testing.i"
 	@echo "... array_testing.s"
+	@echo "... hashtable_testing.o"
+	@echo "... hashtable_testing.i"
+	@echo "... hashtable_testing.s"
 	@echo "... list_testing.o"
 	@echo "... list_testing.i"
 	@echo "... list_testing.s"
