@@ -360,6 +360,30 @@ public:
         current->prev->next = current->next;
         delete current;
     };
+
+    Data get_value(int index) const {
+        if (index < 0) {
+            throw std::out_of_range("Invalid index");
+        }
+
+        if (head == nullptr) {
+            throw std::out_of_range("List is empty");
+        }
+
+        Node<Data>* current = head;
+        int current_index = 0;
+
+        while (current != nullptr) {
+            if (current_index == index) {
+                return current->data;
+            }
+            current = current->next;
+            current_index++;
+        }
+
+        throw std::out_of_range("Invalid index");
+    }
+
     void display(){
         Node<Data>* current = head;
         while (current != nullptr) {
@@ -367,39 +391,6 @@ public:
             current = current->next;
         }
         std::cout << std::endl;
-    }
-
-    void load_from_file(std::string filename) {
-        while (head) { // очищаем текущий лист
-            pop_backward();
-        }
-
-        std::ifstream file(filename);
-        if (!file) {
-            std::cout << "File not found" << std::endl;
-            return;
-        }
-
-        std::string line;
-        while (std::getline(file, line)) {
-            push_back(line);
-        }
-        file.close();
-    }
-
-    void save_to_file(std::string filename) {
-        std::ofstream file(filename);
-        if (!file) {
-            std::cout << "File not found" << std::endl;
-            return;
-        }
-
-        Node<Data>* current = head;
-        while (current != nullptr) {
-            file << current->data << std::endl;
-            current = current->next;
-        }
-        file.close();
     }
 
 private:

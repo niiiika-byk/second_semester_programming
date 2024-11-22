@@ -1,0 +1,1 @@
+/usr/bin/c++  -fprofile-arcs -ftest-coverage CMakeFiles/2list_testing.dir/2list_testing.cpp.o -o 2list_testing  /usr/lib/x86_64-linux-gnu/libgtest.a -lpthread 

@@ -198,6 +198,19 @@ list_testing/fast:
 .PHONY : list_testing/fast
 
 #=============================================================================
+# Target rules for targets named 2list_testing
+
+# Build rule for target.
+2list_testing: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 2list_testing
+.PHONY : 2list_testing
+
+# fast build rule for target.
+2list_testing/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2list_testing.dir/build.make CMakeFiles/2list_testing.dir/build
+.PHONY : 2list_testing/fast
+
+#=============================================================================
 # Target rules for targets named coverage
 
 # Build rule for target.
@@ -222,6 +235,30 @@ gen_coverage_report: cmake_check_build_system
 gen_coverage_report/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gen_coverage_report.dir/build.make CMakeFiles/gen_coverage_report.dir/build
 .PHONY : gen_coverage_report/fast
+
+2list_testing.o: 2list_testing.cpp.o
+.PHONY : 2list_testing.o
+
+# target to build an object file
+2list_testing.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2list_testing.dir/build.make CMakeFiles/2list_testing.dir/2list_testing.cpp.o
+.PHONY : 2list_testing.cpp.o
+
+2list_testing.i: 2list_testing.cpp.i
+.PHONY : 2list_testing.i
+
+# target to preprocess a source file
+2list_testing.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2list_testing.dir/build.make CMakeFiles/2list_testing.dir/2list_testing.cpp.i
+.PHONY : 2list_testing.cpp.i
+
+2list_testing.s: 2list_testing.cpp.s
+.PHONY : 2list_testing.s
+
+# target to generate assembly for a file
+2list_testing.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/2list_testing.dir/build.make CMakeFiles/2list_testing.dir/2list_testing.cpp.s
+.PHONY : 2list_testing.cpp.s
 
 array_testing.o: array_testing.cpp.o
 .PHONY : array_testing.o
@@ -286,8 +323,12 @@ help:
 	@echo "... test"
 	@echo "... coverage"
 	@echo "... gen_coverage_report"
+	@echo "... 2list_testing"
 	@echo "... array_testing"
 	@echo "... list_testing"
+	@echo "... 2list_testing.o"
+	@echo "... 2list_testing.i"
+	@echo "... 2list_testing.s"
 	@echo "... array_testing.o"
 	@echo "... array_testing.i"
 	@echo "... array_testing.s"
