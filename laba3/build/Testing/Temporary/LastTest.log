@@ -1,34 +1,70 @@
-Start testing: Nov 22 17:36 +07
+Start testing: Nov 22 19:00 +07
 ----------------------------------------------------------
 1/1 Testing: test
 1/1 Test: test
 Command: "/home/businka/second_semester_programming/laba3/build/main_testing"
 Directory: /home/businka/second_semester_programming/laba3/build
-"test" start time: Nov 22 17:36 +07
+"test" start time: Nov 22 19:00 +07
 Output:
 ----------------------------------------------------------
-[==========] Running 3 tests from 1 test suite.
+[==========] Running 17 tests from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 3 tests from ArrayTest
+[----------] 17 tests from ArrayTest
 [ RUN      ] ArrayTest.PushBack
 [       OK ] ArrayTest.PushBack (0 ms)
 [ RUN      ] ArrayTest.PushFront
+3
 [       OK ] ArrayTest.PushFront (0 ms)
+[ RUN      ] ArrayTest.PushIn
+[       OK ] ArrayTest.PushIn (0 ms)
+[ RUN      ] ArrayTest.PopFront
+[       OK ] ArrayTest.PopFront (0 ms)
+[ RUN      ] ArrayTest.PopBack
+1
+[       OK ] ArrayTest.PopBack (0 ms)
+[ RUN      ] ArrayTest.PopIn
+[       OK ] ArrayTest.PopIn (0 ms)
 [ RUN      ] ArrayTest.Search
 Found!
 Not found!
 [       OK ] ArrayTest.Search (0 ms)
-[----------] 3 tests from ArrayTest (0 ms total)
+[ RUN      ] ArrayTest.SetValueAt
+[       OK ] ArrayTest.SetValueAt (0 ms)
+[ RUN      ] ArrayTest.InvalidIndexPopIn
+Invalid index
+[       OK ] ArrayTest.InvalidIndexPopIn (0 ms)
+[ RUN      ] ArrayTest.InvalidIndexSetValueAt
+Invalid index
+1
+[       OK ] ArrayTest.InvalidIndexSetValueAt (0 ms)
+[ RUN      ] ArrayTest.PopFrontEmpty
+Array is empty, cannot pop front.
+[       OK ] ArrayTest.PopFrontEmpty (0 ms)
+[ RUN      ] ArrayTest.PopBackEmpty
+Array is empty, cannot pop back.
+[       OK ] ArrayTest.PopBackEmpty (0 ms)
+[ RUN      ] ArrayTest.SearchIndexInvalidIndex
+[       OK ] ArrayTest.SearchIndexInvalidIndex (0 ms)
+[ RUN      ] ArrayTest.SetValueAtInvalidIndex
+[       OK ] ArrayTest.SetValueAtInvalidIndex (0 ms)
+[ RUN      ] ArrayTest.GetValueAtInvalidIndex
+[       OK ] ArrayTest.GetValueAtInvalidIndex (0 ms)
+[ RUN      ] ArrayTest.DisplayEmpty
+[       OK ] ArrayTest.DisplayEmpty (0 ms)
+[ RUN      ] ArrayTest.DisplayNonEmpty
+[       OK ] ArrayTest.DisplayNonEmpty (0 ms)
+[----------] 17 tests from ArrayTest (0 ms total)
 
 [----------] Global test environment tear-down
-[==========] 3 tests from 1 test suite ran. (0 ms total)
-[  PASSED  ] 3 tests.
+[==========] 17 tests from 1 test suite ran. (0 ms total)
+[  PASSED  ] 17 tests.
+libgcov profiling error:/home/businka/second_semester_programming/laba3/build/CMakeFiles/main_testing.dir/main_testing.cpp.gcda:overwriting an existing profile data with a different timestamp
 <end of output>
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test" end time: Nov 22 17:36 +07
+"test" end time: Nov 22 19:00 +07
 "test" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Nov 22 17:36 +07
+End testing: Nov 22 19:00 +07

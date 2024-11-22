@@ -4,7 +4,7 @@
 template <typename Data>
 class Array {
 public:
-    Array() : array(nullptr), size(0), capacity(10) {
+    Array() : array(nullptr), size(0), capacity(2) {
         array = new Data[capacity];
     }
 
@@ -136,6 +136,15 @@ public:
         }
 
         array[index] = value;
+    }
+
+    Data get_value_at(int index) {
+        if (index >= 0 && index < size) {
+            return array[index];
+        } else {
+            std::cout << "Invalid index" << std::endl;
+            throw std::out_of_range("Index out of range");
+        }
     }
 
     int get_size(){
