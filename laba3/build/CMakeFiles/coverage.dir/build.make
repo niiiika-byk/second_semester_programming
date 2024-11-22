@@ -72,6 +72,7 @@ CMakeFiles/coverage: ../2list_testing.cpp
 CMakeFiles/coverage: ../stack_testing.cpp
 CMakeFiles/coverage: ../queue_testing.cpp
 CMakeFiles/coverage: ../hashtable_testing.cpp
+CMakeFiles/coverage: ../tree_testing.cpp
 	/usr/bin/ctest --coverage --output-on-failure
 
 coverage: CMakeFiles/coverage

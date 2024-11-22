@@ -250,6 +250,19 @@ hashtable_testing/fast:
 .PHONY : hashtable_testing/fast
 
 #=============================================================================
+# Target rules for targets named tree_testing
+
+# Build rule for target.
+tree_testing: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tree_testing
+.PHONY : tree_testing
+
+# fast build rule for target.
+tree_testing/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tree_testing.dir/build.make CMakeFiles/tree_testing.dir/build
+.PHONY : tree_testing/fast
+
+#=============================================================================
 # Target rules for targets named coverage
 
 # Build rule for target.
@@ -419,6 +432,30 @@ stack_testing.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/stack_testing.dir/build.make CMakeFiles/stack_testing.dir/stack_testing.cpp.s
 .PHONY : stack_testing.cpp.s
 
+tree_testing.o: tree_testing.cpp.o
+.PHONY : tree_testing.o
+
+# target to build an object file
+tree_testing.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tree_testing.dir/build.make CMakeFiles/tree_testing.dir/tree_testing.cpp.o
+.PHONY : tree_testing.cpp.o
+
+tree_testing.i: tree_testing.cpp.i
+.PHONY : tree_testing.i
+
+# target to preprocess a source file
+tree_testing.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tree_testing.dir/build.make CMakeFiles/tree_testing.dir/tree_testing.cpp.i
+.PHONY : tree_testing.cpp.i
+
+tree_testing.s: tree_testing.cpp.s
+.PHONY : tree_testing.s
+
+# target to generate assembly for a file
+tree_testing.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tree_testing.dir/build.make CMakeFiles/tree_testing.dir/tree_testing.cpp.s
+.PHONY : tree_testing.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -440,6 +477,7 @@ help:
 	@echo "... list_testing"
 	@echo "... queue_testing"
 	@echo "... stack_testing"
+	@echo "... tree_testing"
 	@echo "... 2list_testing.o"
 	@echo "... 2list_testing.i"
 	@echo "... 2list_testing.s"
@@ -458,6 +496,9 @@ help:
 	@echo "... stack_testing.o"
 	@echo "... stack_testing.i"
 	@echo "... stack_testing.s"
+	@echo "... tree_testing.o"
+	@echo "... tree_testing.i"
+	@echo "... tree_testing.s"
 .PHONY : help
 
 

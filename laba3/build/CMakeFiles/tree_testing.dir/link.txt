@@ -1,0 +1,1 @@
+/usr/bin/c++  -fprofile-arcs -ftest-coverage CMakeFiles/tree_testing.dir/tree_testing.cpp.o -o tree_testing  /usr/lib/x86_64-linux-gnu/libgtest.a -lpthread 

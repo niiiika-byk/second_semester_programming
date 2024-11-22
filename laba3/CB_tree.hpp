@@ -148,53 +148,6 @@ public:
         print_CBT (root, 0);
     }
 
-    void clear(Tree_node*& node) {
-        if (node) {
-            clear(node->left);
-            clear(node->right);
-
-            delete node;
-            node = nullptr;
-        }
-    }
-
-    void load_from_file(const string& file) { 
-        clear(root);
-        ifstream load(file);
-        if (!load) {
-            cout << "Failed open file.\n";
-            return;
-        }
-
-        int value;
-        while (load >> value) {
-            insert(value);
-        }
-        load.close();
-    }
-
-    void save_from_file(const string& file) {
-        ofstream save(file);
-        if (!save) {
-            cout << "Failed open file.\n";
-            return;
-        }
-
-        Queue_tree Q;
-        Q.enqueue(root); // начинаем обход с корня
-        while (!Q.is_empty()) {
-            Tree_node* current = Q.dequeue(); // текущий узел
-            save << current->digit << endl; 
-            if (current->left) { // левый потомок
-                Q.enqueue(current->left);
-            }
-            if (current->right) { // правый потомок
-                Q.enqueue(current->right);
-            }
-        }
-        save.close();
-    }
-
 private:
     Tree_node* root;
 };

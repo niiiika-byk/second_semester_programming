@@ -18,6 +18,7 @@ set(TEST_EXECUTABLES
     stack_testing.cpp
     queue_testing.cpp
     hashtable_testing.cpp
+    tree_testing.cpp
 )
 
 # Add executables and link GTest
