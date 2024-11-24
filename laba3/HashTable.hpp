@@ -92,6 +92,68 @@ public:
             delete entry;
         }
     }
+
+    void serialize(const std::string& filename) {
+        std::ofstream file(filename, std::ios::binary);
+        if (!file.is_open()) {
+            throw std::runtime_error("Cannot open file for serialization");
+        }
+
+        unsigned long count = 0;
+        for (unsigned long i = 0; i < table_size; i++) {
+            Hash_node<Key, Value>* entry = table[i];
+            while (entry != nullptr) {
+                count++;
+                entry = entry->get_next();
+            }
+        }
+
+        file.write(reinterpret_cast<const char*>(&count), sizeof(count));
+
+        for (unsigned long i = 0; i < table_size; i++) {
+            Hash_node<Key, Value>* entry = table[i];
+            while (entry != nullptr) {
+                // Сохраняем ключ
+                std::string key = entry->get_key();
+                size_t key_length = key.size();
+                file.write(reinterpret_cast<const char*>(&key_length), sizeof(key_length));
+                file.write(key.data(), key_length);
+                
+                // Сохраняем значение
+                Value value = entry->get_value();
+                file.write(reinterpret_cast<const char*>(&value), sizeof(Value));
+                
+                entry = entry->get_next();
+            }
+        }
+
+        file.close();
+    }
+
+    void deserialize(const std::string& filename) {
+        std::ifstream file(filename, std::ios::binary);
+        if (!file.is_open()) {
+            throw std::runtime_error("Cannot open file for deserialization");
+        }
+
+        unsigned long count = 0;
+        file.read(reinterpret_cast<char*>(&count), sizeof(count));
+
+        for (unsigned long i = 0; i < count; i++) {
+            size_t key_length = 0;
+            file.read(reinterpret_cast<char*>(&key_length), sizeof(key_length));
+
+            std::string key(key_length, '\0');
+            file.read(&key[0], key_length);
+
+            Value value;
+            file.read(reinterpret_cast<char*>(&value), sizeof(Value));
+
+            insert(key, value);
+        }
+
+        file.close();
+    }
     
     void display() {
         for (unsigned long i = 0; i < table_size; i++) {

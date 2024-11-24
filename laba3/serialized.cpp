@@ -20,7 +20,7 @@ int main() {
     newArr.deserialize("array.bin");
     
     // Отображаем содержимое нового массива
-    std::cout << "New array: ";
+    std::cout << "\tNew array: ";
     newArr.display();
     
 
@@ -34,7 +34,7 @@ int main() {
     LinkedList<int> newList;
     newList.deserialize("list.bin");
 
-    std::cout << "New linked list: ";
+    std::cout << "\tNew linked list: ";
     newList.display();
 
 
@@ -48,7 +48,7 @@ int main() {
     DoublyList<int> newDoublyList;
     newDoublyList.deserialize("doublyList.bin");
 
-    std::cout << "New doubly linked list: ";
+    std::cout << "\tNew doubly linked list: ";
     newDoublyList.display();
 
     //очередь
@@ -61,7 +61,7 @@ int main() {
     Queue<int> newQueue;
     newQueue.deserialize("queue.bin");
 
-    std::cout << "New queue: ";
+    std::cout << "\tNew queue: ";
     newQueue.display();
 
     //стек
@@ -74,8 +74,21 @@ int main() {
     Stack<int> newStack;
     newStack.deserialize("stack.bin");
 
-    std::cout << "New stack: ";
+    std::cout << "\tNew stack: ";
     newStack.display();
+
+    Hash_map<std::string, int, 1> hash_table;
+    for (int i = 0; i < 3; i++) {
+        hash_table.insert("key" + to_string(i), i + 1);  // Заполнение карты с ключами в виде строк
+    }
+
+    hash_table.serialize("hash_table.bin");
+    Hash_map<std::string, int, 1> new_hash_table;
+    new_hash_table.deserialize("hash_table.bin");
+
+    std::cout << "\tNew hash table:\n";
+    new_hash_table.display();
+
 
     return 0;
 }
