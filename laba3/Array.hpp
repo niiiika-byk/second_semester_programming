@@ -162,6 +162,38 @@ public:
         std::cout << std::endl;
     }
 
+    // Сериализуем массив и сохраняем в бинарный файл
+    void serialize(const std::string& filename) {
+        std::ofstream ofs(filename, std::ios::binary);
+        if (!ofs.is_open()) {
+            throw std::runtime_error("Failed to open file for writing");
+        }
+
+        ofs.write(reinterpret_cast<const char*>(&size), sizeof(size)); // Записываем размер
+        ofs.write(reinterpret_cast<const char*>(&capacity), sizeof(capacity)); // Записываем вместимость
+
+        // Записываем элементы массива
+        ofs.write(reinterpret_cast<const char*>(array), sizeof(Data) * size);
+        ofs.close();
+    }
+
+    // Десериализует массив
+    void deserialize(const std::string& filename) {
+        std::ifstream ifs(filename, std::ios::binary);
+        if (!ifs.is_open()) {
+            throw std::runtime_error("Cannot open file for reading");
+        }
+
+        ifs.read(reinterpret_cast<char*>(&size), sizeof(size)); // Читаем размер
+        ifs.read(reinterpret_cast<char*>(&capacity), sizeof(capacity)); // Читаем вместимость
+
+        delete[] array;            // Удаляем текущий массив
+        array = new Data[capacity]; // Создаем новый массив с прочитанной вместимостью
+
+        ifs.read(reinterpret_cast<char*>(array), sizeof(Data) * size); // Читаем элементы
+        ifs.close();
+    }
+
 private:
     Data* array;
     int size;       // размерность массива

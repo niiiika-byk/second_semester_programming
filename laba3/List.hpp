@@ -189,6 +189,57 @@ public:
             std::cout << "yes!" << std::endl;
         else std::cout << "No element in list" << std::endl;
     }
+
+    void serialize(const std::string& filename) {
+        std::ofstream ofs(filename, std::ios::binary);
+        if (!ofs.is_open()) {
+            throw std::runtime_error("Failed to open file for writing");
+        }
+
+        int size = 0;
+        Node<Data>* current = head;
+        while (current != nullptr) {
+            size++;
+            current = current->next;
+        }
+
+        //размер списка
+        ofs.write(reinterpret_cast<const char*>(&size), sizeof(size));
+
+        current = head;
+        while (current != nullptr) {
+            ofs.write(reinterpret_cast<const char*>(&current->data), sizeof(Data));
+            current = current->next;
+        }
+
+        ofs.close();
+    }
+
+    void deserialize(const std::string& filename) {
+        std::ifstream ifs(filename, std::ios::binary);
+        if (!ifs.is_open()) {
+            throw std::runtime_error("Cannot open file for reading");
+        }
+
+        int size = 0;
+        ifs.read(reinterpret_cast<char*>(&size), sizeof(size));
+
+        while (head != nullptr) {
+            Node<Data>* next = head->next;
+            delete head;
+            head = next;
+        }
+        tail = nullptr;
+
+        for (int i = 0; i < size; ++i) {
+            Data value;
+            ifs.read(reinterpret_cast<char*>(&value), sizeof(Data));
+            push_back(value);
+        }
+
+        ifs.close();
+    }
+
     void display(){
         if (head == nullptr) {
             std::cout << "List is empty" << std::endl;
@@ -382,6 +433,63 @@ public:
         }
 
         throw std::out_of_range("Invalid index");
+    }
+
+     // Сериализация списка в бинарный файл
+    void serialize(const std::string& filename) {
+        std::ofstream ofs(filename, std::ios::binary);
+        if (!ofs.is_open()) {
+            throw std::runtime_error("Failed to open file for writing");
+        }
+
+        // Подсчитываем количество элементов в списке
+        int size = 0;
+        Node<Data>* current = head;
+        while (current != nullptr) {
+            size++;
+            current = current->next;
+        }
+
+        // Записываем размер списка
+        ofs.write(reinterpret_cast<const char*>(&size), sizeof(size));
+
+        // Записываем элементы списка
+        current = head;
+        while (current != nullptr) {
+            ofs.write(reinterpret_cast<const char*>(&current->data), sizeof(Data));
+            current = current->next;
+        }
+
+        ofs.close();
+    }
+
+    // Десериализация списка из бинарного файла
+    void deserialize(const std::string& filename) {
+        std::ifstream ifs(filename, std::ios::binary);
+        if (!ifs.is_open()) {
+            throw std::runtime_error("Cannot open file for reading");
+        }
+
+        // Читаем размер списка
+        int size = 0;
+        ifs.read(reinterpret_cast<char*>(&size), sizeof(size));
+
+        // Очищаем текущий список
+        while (head != nullptr) {
+            Node<Data>* next = head->next;
+            delete head;
+            head = next;
+        }
+        tail = nullptr;
+
+        // Читаем элементы списка
+        for (int i = 0; i < size; ++i) {
+            Data value;
+            ifs.read(reinterpret_cast<char*>(&value), sizeof(Data));
+            push_back(value); // Используем push_back для добавления элементов в конец списка
+        }
+
+        ifs.close();
     }
 
     void display(){
