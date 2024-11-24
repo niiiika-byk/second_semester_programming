@@ -89,6 +89,18 @@ int main() {
     std::cout << "\tNew hash table:\n";
     new_hash_table.display();
 
+    //дерево
+    CBTree cb_tree;
+    cb_tree.insert(16);
+    cb_tree.insert(17);
+    cb_tree.insert(18);
+
+    cb_tree.serialize("cb_tree.bin");
+    CBTree new_cb_tree;
+    new_cb_tree.deserialize("cb_tree.bin");
+
+    std::cout << "\tNew CB tree:\n";
+    new_cb_tree.display();
 
     return 0;
 }

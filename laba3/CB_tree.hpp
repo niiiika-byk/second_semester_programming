@@ -1,3 +1,4 @@
+#include <queue>
 #include <iostream>
 #include <fstream>
 
@@ -124,6 +125,70 @@ public:
             }
         }
         cout << "Value not found.\n";
+    }
+
+    void serialize(const string& filename) {
+        ofstream file(filename);
+        if (!file.is_open()) {
+            throw runtime_error("Cannot open file for serialization");
+        }
+
+        if (root == nullptr) {
+            file << "-1"; // Если дерево пустое
+            file.close();
+            return;
+        }
+
+        Queue_tree Q;
+        Q.enqueue(root);
+        while (!Q.is_empty()) {
+            Tree_node* current = Q.dequeue();
+            if (current != nullptr) {
+                file << current->digit << " ";
+                Q.enqueue(current->left);
+                Q.enqueue(current->right);
+            } else {
+                file << "-1 "; // Используем -1 для обозначения отсутствующего узла
+            }
+        }
+        file.close();
+    }
+
+    void deserialize(const string& filename) {
+        ifstream file(filename);
+        if (!file.is_open()) {
+            throw runtime_error("Cannot open file for deserialization");
+        }
+
+        root = nullptr; // Reset the tree
+        queue<Tree_node**> Q; // Use a queue of pointers to pointers
+        int value;
+
+        while (file >> value) {
+            Tree_node* new_node = nullptr;
+            if (value != -1) {
+                new_node = new Tree_node(value);
+            }
+
+            if (root == nullptr) {
+                root = new_node; // Set the root
+                Q.push(&root); // Add pointer to root in the queue
+            } else {
+                if (Q.empty()) {
+                    throw runtime_error("Queue is empty, but more nodes are expected.");
+                }
+                Tree_node** parent_ptr = Q.front(); // Get pointer to parent node
+                Q.pop();
+                if ((*parent_ptr)->left == nullptr) {
+                    (*parent_ptr)->left = new_node; // Set left child
+                    Q.push(&((*parent_ptr)->left)); // Add pointer to left child in the queue
+                } else {
+                    (*parent_ptr)->right = new_node; // Set right child
+                    Q.push(&((*parent_ptr)->right)); // Add pointer to right child in the queue
+                }
+            }
+        }
+        file.close();
     }
 
     // вывод обхода
