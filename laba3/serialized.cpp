@@ -1,5 +1,9 @@
 #include "Array.hpp"
 #include "List.hpp"
+#include "Queue.hpp"
+#include "Stack.hpp"
+#include "HashTable.hpp"
+#include "CB_tree.hpp"
 
 int main() {
     //для массива
@@ -46,6 +50,32 @@ int main() {
 
     std::cout << "New doubly linked list: ";
     newDoublyList.display();
+
+    //очередь
+    Queue<int> queue;
+    queue.push(10);
+    queue.push(11);
+    queue.push(12);
+
+    queue.serialize("queue.bin");
+    Queue<int> newQueue;
+    newQueue.deserialize("queue.bin");
+
+    std::cout << "New queue: ";
+    newQueue.display();
+
+    //стек
+    Stack<int> stack;
+    stack.push(13);
+    stack.push(14);
+    stack.push(15);
+
+    stack.serialize("stack.bin");
+    Stack<int> newStack;
+    newStack.deserialize("stack.bin");
+
+    std::cout << "New stack: ";
+    newStack.display();
 
     return 0;
 }
