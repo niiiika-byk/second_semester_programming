@@ -251,6 +251,9 @@ CMakeFiles/tree_testing.dir/tree_testing.cpp.o: \
  /usr/include/gtest/gtest-typed-test.h \
  /usr/include/gtest/gtest_pred_impl.h \
  /home/businka/second_semester_programming/laba3/CB_tree.hpp \
+ /usr/include/c++/11/queue /usr/include/c++/11/deque \
+ /usr/include/c++/11/bits/stl_deque.h /usr/include/c++/11/bits/deque.tcc \
+ /usr/include/c++/11/bits/stl_heap.h /usr/include/c++/11/bits/stl_queue.h \
  /usr/include/c++/11/fstream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
