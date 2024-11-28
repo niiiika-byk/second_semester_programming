@@ -12,17 +12,25 @@ int main() {
     //создаем массив указателей на животных
     std::vector<Animal*> animals;
 
-    //инициализируем 
+    //инициализируем жертв
     for (int i = 0; i < count_beast; i++) {
         int x, y, orientation, step_change_direction;
         std::cin >> x >> y >> orientation >> step_change_direction;
-        animals.push_back(AnimalFactory::createPrey(x, y, orientation, step_change_direction));
+        Direction direction = getDirectionFromInput(orientation);
+        animals.push_back(AnimalFactory::createPrey(x, y, direction, step_change_direction));
     }
 
+    //инициализируем хищников
     for (int i = 0; i < count_prey; i++) {
         int x, y, orientation, step_change_direction;
         std::cin >> x >> y >> orientation >> step_change_direction;
-        animals.push_back(AnimalFactory::createPredator(x, y, orientation, step_change_direction));
+        Direction direction = getDirectionFromInput(orientation);
+        animals.push_back(AnimalFactory::createPredator(x, y, direction, step_change_direction));
+    }
+
+    //симуляция
+    for (int i = 0; i < step; i++){
+        
     }
 
     // Освобождение памяти
