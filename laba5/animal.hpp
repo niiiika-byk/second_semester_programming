@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <cstdlib>
 #include <ctime>
-#include <pair>
+#include <utility>
 
 const int MAX_AGE_PREY = 10;    //макс.возраст жертвы
 const int MAX_AGE_PREDATOR = 20; //макс.возраст хищника
@@ -132,6 +132,15 @@ public:
     }
 };
 
+struct pair_hash {
+    template <class T1, class T2>
+    std::size_t operator() (const std::pair<T1, T2>& pair) const {
+        auto hash1 = std::hash<T1>{}(pair.first);
+        auto hash2 = std::hash<T2>{}(pair.second);
+        return hash1 ^ hash2;
+    }
+};
+
 //симуляция жизни
 class Simulation {
 private:
@@ -168,37 +177,34 @@ public:
                 }
             }
 
-        // Handle predator-prey interactions
-        std::unordered_map<std::pair<int, int>, std::vector<Predator*>, boost::hash<std::pair<int, int>>> predatorMap;
+            std::unordered_map<std::pair<int, int>, std::vector<Predator*>, pair_hash> predatorMap;
 
-        for (auto predator : animals) {
-            if (dynamic_cast<Predator*>(predator)) {
-                int x = predator->getX();
-                int y = predator->getY();
-                predatorMap[{x, y}].push_back(dynamic_cast<Predator*>(predator));
+            for (auto predator : animals) {
+                if (dynamic_cast<Predator*>(predator)) {
+                    int x = predator->getX();
+                    int y = predator->getY();
+                    predatorMap[{x, y}].push_back(dynamic_cast<Predator*>(predator));
+                }
             }
-        }
 
-        for (auto prey : animals) {
-            if (dynamic_cast<Prey*>(prey)) {
-                int x = prey->getX();
-                int y = prey->getY();
+            for (auto prey : animals) {
+                if (dynamic_cast<Prey*>(prey)) {
+                    int x = prey->getX();
+                    int y = prey->getY();
 
-                // Check if there are predators on the same cell
-                if (predatorMap.find({x, y}) != predatorMap.end()) {
-                    auto& predatorsOnCell = predatorMap[{x, y}];
+                    // Check if there are predators on the same cell
+                    if (predatorMap.find({x, y}) != predatorMap.end()) {
+                        auto& predatorsOnCell = predatorMap[{x, y}];
 
-                    // If there are predators, let the first one eat the prey
-                    if (!predatorsOnCell.empty()) {
-                        // Determine the youngest predator
-                        Predator* youngestPredator = nullptr;
-                        for (auto predator : predatorsOnCell) {
-                            if (youngestPredator == nullptr || predator->getAge() < youngestPredator->getAge()) {
-                                youngestPredator = predator;
+                        // If there are predators, let the first one eat the prey
+                        if (!predatorsOnCell.empty()) {
+                            // Determine the youngest predator
+                            Predator* youngestPredator = nullptr;
+                            for (auto predator : predatorsOnCell) {
+                                if (youngestPredator == nullptr || predator->getAge() < youngestPredator->getAge()) {
+                                    youngestPredator = predator;
+                                }
                             }
-                        }
-
-                        // Eat the prey
                         youngestPredator->eatPrey();
                         prey = nullptr; // Mark prey for deletion
                     }
