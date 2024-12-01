@@ -1,10 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <unordered_map>
 #include <cstdlib>
 #include <ctime>
-#include <utility>
 
 const int MAX_AGE_PREY = 10;    //макс.возраст жертвы
 const int MAX_AGE_PREDATOR = 20; //макс.возраст хищника
@@ -120,15 +118,49 @@ public:
     }
 };
 
+class Fox : public Predator {
+public:
+    Fox(int _x, int _y, Direction _direction, int k) 
+        : Predator(_x, _y, _direction, k) {}
+};
+
+class Bear : public Predator {
+public:
+    Bear(int _x, int _y, Direction _direction, int k) 
+        : Predator(_x, _y, _direction, k) {}
+};
+
+class Rabbit : public Prey {
+public:
+    Rabbit(int _x, int _y, Direction _direction, int k) 
+        : Prey(_x, _y, _direction, k) {}
+};
+
+class Pig : public Prey {
+public:
+    Pig(int _x, int _y, Direction _direction, int k) 
+        : Prey(_x, _y, _direction, k) {}
+};
+
 //фабрика для создания животных
 class AnimalFactory {
 public:
     static Prey* createPrey(int x, int y, Direction direction, int k) {
-        return new Prey(x, y, direction, k);
+        // Случайный выбор между зайцем и поросенком
+        if (std::rand() % 2 == 0) {
+            return new Rabbit(x, y, direction, k); // Создание случайного зайца
+        } else {
+            return new Pig(x, y, direction, k); // Создание случайного поросенка
+        }
     }
 
     static Predator* createPredator(int x, int y, Direction direction, int k) {
-        return new Predator(x, y, direction, k);
+        // Случайный выбор между лисой и медведем
+        if (std::rand() % 2 == 0) {
+            return new Fox(x, y, direction, k); // Создание случайной лисы
+        } else {
+            return new Bear(x, y, direction, k); // Создание случайного медведя
+        }
     }
 };
 
@@ -192,13 +224,11 @@ public:
                     int x = prey->getX();
                     int y = prey->getY();
 
-                    // Check if there are predators on the same cell
+                    //проверка наличия хищника
                     if (predatorMap.find({x, y}) != predatorMap.end()) {
                         auto& predatorsOnCell = predatorMap[{x, y}];
 
-                        // If there are predators, let the first one eat the prey
                         if (!predatorsOnCell.empty()) {
-                            // Determine the youngest predator
                             Predator* youngestPredator = nullptr;
                             for (auto predator : predatorsOnCell) {
                                 if (youngestPredator == nullptr || predator->getAge() < youngestPredator->getAge()) {
@@ -206,23 +236,23 @@ public:
                                 }
                             }
                         youngestPredator->eatPrey();
-                        prey = nullptr; // Mark prey for deletion
+                        prey = nullptr; //маркируем для удаления
                     }
                 }
             }
         }
 
-            // Remove dead animals (those that are not alive)
+            //удаляем умерших животных
             animals.erase(std::remove_if(animals.begin(), animals.end(), [](Animal* animal) {
                 return !animal->isAlive();
             }), animals.end());
 
-            // Add new animals to the main list
+            //добавляем родившихся
             for (auto newAnimal : newAnimals) {
                 animals.push_back(newAnimal);
             }
 
-            // Update the grid counts
+            //обновление положения
             for (const auto& animal : animals) {
                 int x = animal->getX();
                 int y = animal->getY();
@@ -239,14 +269,14 @@ public:
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (preyCount[i][j] > 0) {
-                    std::cout << "+" << preyCount[i][j]; // Prey count
+                    std::cout << "+" << preyCount[i][j];
                 } else if (predatorCount[i][j] > 0) {
-                    std::cout << "-" << predatorCount[i][j]; // Predator count
+                    std::cout << "-" << predatorCount[i][j];
                 } else {
-                    std::cout << "*"; // No animals
+                    std::cout << "*";
                 }
             }
-            std::cout << std::endl; // New line for the next row
+            std::cout << std::endl;
         }
     }
 

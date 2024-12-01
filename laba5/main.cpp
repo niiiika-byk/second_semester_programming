@@ -9,9 +9,6 @@ int main() {
     int count_beast, count_prey;
     std::cin >> count_beast >> count_prey;
 
-    //создаем массив указателей на животных
-    std::vector<Animal*> animals;
-
     Simulation simulation(line, count, step);
 
     //инициализируем жертв
@@ -19,7 +16,7 @@ int main() {
         int x, y, orientation, step_change_direction;
         std::cin >> x >> y >> orientation >> step_change_direction;
         Direction direction = getDirectionFromInput(orientation);
-        animals.push_back(AnimalFactory::createPrey(x, y, direction, step_change_direction));
+        simulation.addAnimal(AnimalFactory::createPrey(x, y, direction, step_change_direction));
     }
 
     //инициализируем хищников
@@ -27,7 +24,7 @@ int main() {
         int x, y, orientation, step_change_direction;
         std::cin >> x >> y >> orientation >> step_change_direction;
         Direction direction = getDirectionFromInput(orientation);
-        animals.push_back(AnimalFactory::createPredator(x, y, direction, step_change_direction));
+        simulation.addAnimal(AnimalFactory::createPredator(x, y, direction, step_change_direction));
     }
 
     //запускаем симуляцию
