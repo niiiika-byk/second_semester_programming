@@ -1,7 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <unordered_map>
 #include <cstdlib>
 #include <ctime>
+#include <pair>
 
 const int MAX_AGE_PREY = 10;    //макс.возраст жертвы
 const int MAX_AGE_PREDATOR = 20; //макс.возраст хищника
@@ -117,7 +120,7 @@ public:
     }
 };
 
-// Фабрика для создания животных
+//фабрика для создания животных
 class AnimalFactory {
 public:
     static Prey* createPrey(int x, int y, Direction direction, int k) {
@@ -126,5 +129,124 @@ public:
 
     static Predator* createPredator(int x, int y, Direction direction, int k) {
         return new Predator(x, y, direction, k);
+    }
+};
+
+//симуляция жизни
+class Simulation {
+private:
+    int height;
+    int width;
+    int steps;
+    std::vector<Animal*> animals;
+    std::vector<std::vector<int>> preyCount;
+    std::vector<std::vector<int>> predatorCount;
+
+public:
+    Simulation(int h, int w, int s) : height(h), width(w), steps(s) {
+        preyCount.resize(height, std::vector<int>(width, 0));
+        predatorCount.resize(height, std::vector<int>(width, 0));
+    }
+
+    void addAnimal(Animal* animal) {
+        animals.push_back(animal);
+    }
+
+    void run() {
+        for (int i = 0; i < steps; i++) {
+            //движение животного
+            for (auto& animal : animals) {
+                animal->move(width, height);
+            }
+
+            //возраст и размножение
+            std::vector<Animal*> newAnimals; //детеныши
+            for (auto& animal : animals) {
+                animal->ageAnimal();
+                if (animal->isAlive()) {
+                    animal->reproduce(newAnimals);
+                }
+            }
+
+        // Handle predator-prey interactions
+        std::unordered_map<std::pair<int, int>, std::vector<Predator*>, boost::hash<std::pair<int, int>>> predatorMap;
+
+        for (auto predator : animals) {
+            if (dynamic_cast<Predator*>(predator)) {
+                int x = predator->getX();
+                int y = predator->getY();
+                predatorMap[{x, y}].push_back(dynamic_cast<Predator*>(predator));
+            }
+        }
+
+        for (auto prey : animals) {
+            if (dynamic_cast<Prey*>(prey)) {
+                int x = prey->getX();
+                int y = prey->getY();
+
+                // Check if there are predators on the same cell
+                if (predatorMap.find({x, y}) != predatorMap.end()) {
+                    auto& predatorsOnCell = predatorMap[{x, y}];
+
+                    // If there are predators, let the first one eat the prey
+                    if (!predatorsOnCell.empty()) {
+                        // Determine the youngest predator
+                        Predator* youngestPredator = nullptr;
+                        for (auto predator : predatorsOnCell) {
+                            if (youngestPredator == nullptr || predator->getAge() < youngestPredator->getAge()) {
+                                youngestPredator = predator;
+                            }
+                        }
+
+                        // Eat the prey
+                        youngestPredator->eatPrey();
+                        prey = nullptr; // Mark prey for deletion
+                    }
+                }
+            }
+        }
+
+            // Remove dead animals (those that are not alive)
+            animals.erase(std::remove_if(animals.begin(), animals.end(), [](Animal* animal) {
+                return !animal->isAlive();
+            }), animals.end());
+
+            // Add new animals to the main list
+            for (auto newAnimal : newAnimals) {
+                animals.push_back(newAnimal);
+            }
+
+            // Update the grid counts
+            for (const auto& animal : animals) {
+                int x = animal->getX();
+                int y = animal->getY();
+                if (dynamic_cast<Prey*>(animal)) {
+                    preyCount[y][x]++;
+                } else if (dynamic_cast<Predator*>(animal)) {
+                    predatorCount[y][x]++;
+                }
+            }
+        }
+    }
+
+    void printResults() const {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (preyCount[i][j] > 0) {
+                    std::cout << "+" << preyCount[i][j]; // Prey count
+                } else if (predatorCount[i][j] > 0) {
+                    std::cout << "-" << predatorCount[i][j]; // Predator count
+                } else {
+                    std::cout << "*"; // No animals
+                }
+            }
+            std::cout << std::endl; // New line for the next row
+        }
+    }
+
+    ~Simulation() {
+        for (auto& animal : animals) {
+            delete animal; // Free memory
+        }
     }
 };
