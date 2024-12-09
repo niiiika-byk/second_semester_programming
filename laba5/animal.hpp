@@ -262,6 +262,7 @@ public:
                     predatorCount[y][x]++;
                 }
             }
+            printResults();
         }
     }
 
