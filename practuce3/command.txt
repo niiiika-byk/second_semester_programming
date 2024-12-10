@@ -1,6 +1,7 @@
-INSERT INTO user VALUES (30, 'Alice', 'alice@mail.com'), (25, 'Bob', 'bob@mail.com'), (35, 'Charlie', 'charlie@mail.com');
+INSERT INTO user VALUES (30, Alice, alice@mail.com), (25, Bob, bob@mail.com), (35, Charlie, charlie@mail.com);
+INSERT INTO user_lot VALUES (1, 30, 10, 100), (2, 35, 11, 100), (3, 25, 12, 100);
 
 DELETE from users WHERE users.name = 'Bob'
 
-SELECT таблица1.колонка1, таблица2.колонка2 FROM таблица1, таблица2 
+SELECT таблица1.email, таблица2.колонка2 FROM таблица1, таблица2 
 WHERE таблица1.колонка1 = таблица2.колонка2 AND таблица1.колонка2 = 'data2'

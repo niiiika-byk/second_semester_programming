@@ -16,61 +16,66 @@
 #define MAX_CLIENTS 2
 #define BUFFER_SIZE 1024
 
-void hendle_client(char *buffer, TableJson &tableJS)
-{
+void handle_client(char *buffer, TableJson &tableJS) {
     std::istringstream iss(buffer);
-    string command;
-    cout << ">>> ";
+    std::string command;
+    std::cout << ">>> ";
     getline(iss, command);
 
-    if (command.find("INSERT") == 0)
-    {
-        string answer;
+    if (command.find("INSERT") == 0) {
+        std::string answer;
         memset(buffer, 0, BUFFER_SIZE); // очистка буфера
-        if (insert(command, tableJS) == 1)
-        {
+        if (insert(command, tableJS) == 1) {
             answer = "Inserted badly, think about it again and question from server\n";
             strcpy(buffer, answer.c_str());
-        }
-        else{
+        } else {
             answer = "Inserted successfully!\n";
             strcpy(buffer, answer.c_str());
         }
         return;
-    }
-    else if (command.find("DELETE") == 0)
-    {
-        string answer;
+    } else if (command.find("DELETE") == 0) {
+        std::string answer;
         memset(buffer, 0, BUFFER_SIZE); // очистка буфера
-        if (del(command, tableJS) == 1){
+        if (del(command, tableJS) == 1) {
             answer = "Deleted badly, think about it again\n";
             strcpy(buffer, answer.c_str());
-        }
-        else {
+        } else {
             answer = "Deleted successfully!\n";
             strcpy(buffer, answer.c_str());
         }
         return;
-    }
-    else if (command.find("SELECT") == 0)
-    {
-        string answer;
-        if (select(buffer, BUFFER_SIZE, tableJS) == 1){
-            answer = "Selected badly, think about it again\n";
-            strcpy(buffer, answer.c_str());
+    } else if (command.find("SELECT") == 0) {
+        std::string answer;
+        try {
+            selectFromTables(command, tableJS); // Вызов новой функции
+
+            // Читаем результат из select_result.csv
+            std::ifstream resultFile("select_result.csv");
+            if (resultFile.is_open()) {
+                std::stringstream resultBuffer;
+                resultBuffer << resultFile.rdbuf();
+                answer = resultBuffer.str();
+                resultFile.close();
+            } else {
+                std::cerr << "[ERROR] Could not open select_result.csv." << std::endl;
+                answer = "Error: Could not open select_result.csv.\n";
+            }
+        } catch (const std::exception &e) {
+            std::cerr << "[ERROR] Exception: " << e.what() << std::endl;
+            answer = std::string("Error: ") + e.what() + "\n";
         }
-        else {
-            answer = "Selected successfully!\n";
-        }
+
+        // Отправляем ответ клиенту
+        memset(buffer, 0, BUFFER_SIZE); // очистка буфера
+        strcpy(buffer, answer.c_str());
         return;
-    }
-    else
-    {
-        string answer = "Incorrect command.\n";
+    } else {
+        std::string answer = "Incorrect command.\n";
         strcpy(buffer, answer.c_str());
         return;
     }
 }
+
 
 int main()
 {
@@ -164,7 +169,7 @@ int main()
                 }
                 std::string message(buffer, readed_bytes);
                 cout << "Client: " << message << "\n";
-                hendle_client(buffer, tableJS);
+                handle_client(buffer, tableJS);
                 write(server_fds[clientSocketNumber].fd, buffer, BUFFER_SIZE);
                 memset(buffer, 0, BUFFER_SIZE);
             }

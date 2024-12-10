@@ -6,17 +6,26 @@
 
 using namespace std;
 
-// поиск точки
-void splitDot(const string& word, string& table, string& column, TableJson& tableJS);
-// отделение от кавычек строки
-string ignoreQuotes(const string& word);
-// наличие точки в слове
-bool findDot(const string& word);
-// количество созданных csv файлов
-int countCsv(TableJson& tableJS, const string& table);
-// объекдинение 2 таблиц
-void crossJoin(TableJson& tableJS, const string& table1, const string& table2, const string& column1, const string& column2, char *buffer);
-// проверка условий в таблицах
-bool checkCond(TableJson& tableJS, const string& table, const string& column, const string& tcond, const string& ccond, const string& s);
-// выборка
-int select(char *buffer, int BUFFER_SIZE, TableJson& tableJS);
+struct Condition {
+    std::string column;
+    std::string op;
+    std::string value;
+};
+
+// Удаление префикса таблицы и очистка от лишних пробелов
+std::string removeTablePrefix(const std::string& columnName);
+// Функция для очистки значения от кавычек и пробелов
+std::string cleanValue(std::string val);
+// Проверка условий WHERE
+bool checkCondition(const std::string& cellValue, const std::string& condition, const std::string& op);
+// Парсинг одного условия
+void parseSingleCondition(const std::string& combined, std::vector<Condition>& conditions);
+// Парсинг условий
+void parseConditions(const std::string& conditionStr, std::vector<Condition>& conditions, std::vector<std::string>& logicOps);
+// Функция проверки всех условий по логическим связкам
+bool checkAllConditions(const std::vector<Condition>& conditions,
+                        const std::vector<std::string>& headers,
+                        const std::vector<std::string>& rowValues,
+                        const std::vector<std::string>& logicOps);
+// Функция парсинга условий из строки после WHERE
+void selectFromTables(const std::string& command, TableJson& tableJS);

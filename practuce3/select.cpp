@@ -1,346 +1,278 @@
 #include "select.hpp"
 
-// поиск точки
-void splitDot(const string &word, string &table, string &column, TableJson &tableJS)
-{
-    bool dot = false;
-    for (size_t i = 0; i < word.size(); i++)
-    {
-        if (word[i] == '.')
-        {
-            dot = true;
-            continue;
-        }
-        if (word[i] == ',')
-        {
-            continue;
-        }
-        if (!dot)
-        { // разделяем таблицу и колонку
-            table += word[i];
-        }
-        else
-        {
-            column += word[i];
-        }
-    }
-    if (!dot)
-    {
-        cerr << "Incorrect command10.\n";
-        return;
-    }
-    if (isTableExist(table, tableJS.tablehead) == false)
-    {
-        cerr << "There is no table.\n";
-        return;
-    }
-    if (isColumnExist(table, column, tableJS.tablehead) == false)
-    {
-        cerr << "There is no column.\n";
-        return;
-    }
+namespace fs = std::filesystem;
+
+// Удаление префикса таблицы и очистка от лишних пробелов
+std::string removeTablePrefix(const std::string& columnName) {
+    size_t dotPos = columnName.find('.');
+    std::string cleanCol = (dotPos != std::string::npos) ? columnName.substr(dotPos + 1) : columnName;
+    cleanCol.erase(0, cleanCol.find_first_not_of(" '\""));
+    cleanCol.erase(cleanCol.find_last_not_of(" '\"") + 1);
+    return cleanCol;
 }
 
-// отделение от кавычек строки
-string ignoreQuotes(const string &word)
-{
-    string word_without;
-    for (size_t i = 0; i < word.size(); i++)
-    {
-        if (word[i] != '\'')
-        {
-            word_without += word[i];
-        }
-    }
-    return word_without;
+// Функция для очистки значения от кавычек и пробелов
+std::string cleanValue(std::string val) {
+    val.erase(0, val.find_first_not_of(" \t\n\r'\""));
+    val.erase(val.find_last_not_of(" \t\n\r'\"") + 1);
+    return val;
 }
 
-// наличие точки в слове
-bool findDot(const string &word)
-{
-    bool dot = false;
-    for (size_t i = 0; i < word[i]; i++)
-    {
-        if (word[i] == '.')
-        {
-            dot = true;
-        }
+// Проверка условий WHERE
+bool checkCondition(const std::string& cellValue, const std::string& condition, const std::string& op) {
+    std::string cleanedCondition = cleanValue(condition);
+    std::string cleanedCellValue = cleanValue(cellValue);
+
+    std::cout << "[DEBUG] Comparing values: cleanedCellValue = '" << cleanedCellValue
+              << "', cleanedCondition = '" << cleanedCondition << "'\n";
+
+    // Проверяем, не осталась ли точка с запятой на конце condition
+    if (!cleanedCondition.empty() && cleanedCondition.back() == ';') {
+        cleanedCondition.pop_back();
+        cleanedCondition = cleanValue(cleanedCondition);
     }
-    return dot;
-}
 
-// количество созданных csv файлов
-int countCsv(TableJson &tableJS, const string &table)
-{
-    std::filesystem::path currentDirectory = std::filesystem::current_path();
-    currentDirectory = currentDirectory.parent_path().string();
-    string currentDir = currentDirectory.string();
+    try {
+        double cellNumericValue = std::stod(cleanedCellValue);
+        double conditionNumericValue = std::stod(cleanedCondition);
 
-    int amountCsv = 1;
-    while (true)
-    {
-        string filePath = currentDir + "/" + table + "/" + to_string(amountCsv) + ".csv";
-        ifstream file(filePath);
-        if (!file.is_open())
-        {
-            break;
-        }
-        file.close();
-        amountCsv++;
+        if (op == "=") return cellNumericValue == conditionNumericValue;
+        else if (op == "<") return cellNumericValue < conditionNumericValue;
+        else if (op == ">") return cellNumericValue > conditionNumericValue;
+        else if (op == "<=") return cellNumericValue <= conditionNumericValue;
+        else if (op == ">=") return cellNumericValue >= conditionNumericValue;
+    } catch (...) {
+        // Строковое сравнение, если не число
+        std::cout << "[DEBUG] Performing string comparison\n";
+        if (op == "=") return cleanedCellValue == cleanedCondition;
+        else if (op == "<") return cleanedCellValue < cleanedCondition;
+        else if (op == ">") return cleanedCellValue > cleanedCondition;
+        else if (op == "<=") return cleanedCellValue <= cleanedCondition;
+        else if (op == ">=") return cleanedCellValue >= cleanedCondition;
     }
-    return amountCsv;
-}
 
-// объединение 2 таблиц
-void crossJoin(TableJson &tableJS, const string &table1,
-               const string &table2, const string &column1, const string &column2, char *buffer)
-{
-    ostringstream oss(buffer);
-    std::filesystem::path currentDirectory = std::filesystem::current_path();
-    currentDirectory = currentDirectory.parent_path().string();
-    string currentDir = currentDirectory.string();
-
-    int amountCsv1 = countCsv(tableJS, table1);
-    int amountCsv2 = countCsv(tableJS, table2);
-    for (size_t iCsv1 = 1; iCsv1 < amountCsv1; iCsv1++)
-    {
-        string filePath1 = currentDir + "/" + table1 + "/" + to_string(iCsv1) + ".csv";
-        rapidcsv::Document doc1(filePath1);
-        int columnIndex1 = doc1.GetColumnIdx(column1);
-        size_t amountRow1 = doc1.GetRowCount();
-
-        for (size_t i = 0; i < amountRow1; ++i)
-        { // проходимся по строкам 1 таблицы
-
-            for (size_t iCsv2 = 1; iCsv2 < amountCsv2; iCsv2++)
-            {
-                string filePath2 = currentDir + "/" + table2 + "/" + to_string(iCsv2) + ".csv";
-                rapidcsv::Document doc2(filePath2);
-                int columnIndex2 = doc2.GetColumnIdx(column2);
-                size_t amountRow2 = doc2.GetRowCount();
-
-                for (size_t j = 0; j < amountRow2; ++j)
-                { // проходимся по строкам 2 таблицы
-                    oss << doc1.GetCell<string>(0, i) << ": ";
-                    oss << doc1.GetCell<string>(columnIndex1, i) << "  |   ";
-                    oss << doc2.GetCell<string>(0, j) << ": ";
-                    oss << doc2.GetCell<string>(columnIndex2, j) << "\n";
-                }
-                strcpy(buffer, oss.str().c_str());
-            }
-        }
-    }
-}
-
-// проверка условий
-bool checkCond(TableJson &tableJS, const string &table, const string &column, const string &tcond, const string &ccond, const string &s)
-{
-    std::filesystem::path currentDirectory = std::filesystem::current_path();
-    currentDirectory = currentDirectory.parent_path().string();
-    string currentDir = currentDirectory.string();
-
-    if (s != "")
-    {
-        int amountCsv = countCsv(tableJS, table);
-
-        for (size_t iCsv = 1; iCsv < amountCsv; iCsv++)
-        {
-            string filePath = currentDir + "/" + table + "/" + to_string(iCsv) + ".csv";
-            rapidcsv::Document doc(filePath);
-            int columnIndex = doc.GetColumnIdx(column);
-            size_t amountRow = doc.GetRowCount();
-
-            for (size_t i = 0; i < amountRow; ++i)
-            { // проходимся по строкам
-                if (doc.GetCell<string>(columnIndex, i) == s)
-                { // извлекаем значение
-                    return true;
-                }
-            }
-        }
-    }
-    else
-    {
-        bool condition = true;
-        int amountCsv = countCsv(tableJS, table);
-        for (size_t iCsv = 1; iCsv < amountCsv; iCsv++)
-        {
-            string pk1, pk2;
-            string pk1Path = currentDir + "/" + table + "/" + table + "_pk_sequence.txt";
-            string pk2Path = currentDir + "/" + tcond + "/" + tcond + "_pk_sequence.txt";
-            ifstream file1(pk1Path);
-            if (!file1.is_open())
-            {
-                cerr << "1Fail to open file.\n";
-                return false;
-            }
-            file1 >> pk1;
-            file1.close();
-            ifstream file2(pk2Path);
-            if (!file2.is_open())
-            {
-                cerr << "2Fail to open file.\n";
-                return false;
-            }
-            file2 >> pk2;
-            file2.close();
-
-            string filePath1 = currentDir + "/" + table + "/" + to_string(iCsv) + ".csv";
-            rapidcsv::Document doc1(filePath1);
-            int columnIndex1 = doc1.GetColumnIdx(column);
-            size_t amountRow1 = doc1.GetRowCount();
-
-            string filePath2 = currentDir + "/" + tcond + "/" + to_string(iCsv) + ".csv";
-            rapidcsv::Document doc2(filePath2);
-            int columnIndex2 = doc2.GetColumnIdx(ccond);
-            for (size_t i = 0; i < amountRow1; ++i)
-            { // проходимся по строкам
-                if (doc1.GetCell<string>(columnIndex1, i) != doc2.GetCell<string>(columnIndex2, i))
-                {
-                    condition = false;
-                }
-            }
-        }
-        if (condition)
-        {
-            return true;
-        }
-    }
     return false;
 }
 
-// выборка
-int select(char *buffer, int BUFFER_SIZE, TableJson &tableJS)
+void parseSingleCondition(const std::string& combined, std::vector<Condition>& conditions) {
+    // Сначала удалим лишние пробелы и точки с запятой
+    std::string str = combined;
+    str = cleanValue(str);
+    if (!str.empty() && str.back() == ';') {
+        str.pop_back();
+        str = cleanValue(str);
+    }
+
+    // Проверяем двухсимвольные операторы сначала
+    size_t opPos = std::string::npos;
+    std::string opCandidates[] = {"<=", ">=", "<", ">", "="};
+    std::string foundOp;
+    for (auto &opc : opCandidates) {
+        size_t pos = str.find(opc);
+        if (pos != std::string::npos) {
+            opPos = pos;
+            foundOp = opc;
+            break;
+        }
+    }
+
+    if (opPos == std::string::npos) {
+        // Не нашли оператор - ошибка
+        throw std::runtime_error("No valid operator found in condition: " + combined);
+    }
+
+    Condition c;
+    c.column = str.substr(0, opPos);
+    c.op = foundOp;
+    c.value = str.substr(opPos + foundOp.size());
+
+    c.column = cleanValue(c.column);
+    c.value = cleanValue(c.value);
+
+    conditions.push_back(c);
+}
+
+void parseConditions(const std::string& conditionStr,
+                     std::vector<Condition>& conditions,
+                     std::vector<std::string>& logicOps) 
 {
-    istringstream iss(buffer);
-    memset(buffer, 0, BUFFER_SIZE); // очистка буфера
-    string word;
-    iss >> word;
-    iss >> word;
-    string table1, column1;
-    splitDot(word, table1, column1, tableJS); // разделяем таблицу1 и колонку1
-
-    iss >> word;
-    string table2, column2;
-    splitDot(word, table2, column2, tableJS); // разделяем таблицу2 и колонку2
-
-
-    iss >> word;
-    if (word != "FROM")
-    {
-        cerr << "Incorrect command1.\n";
-        return 1;
-    }
-    iss >> word;
-    string tab1;
-    for (size_t i = 0; i < word.size(); i++)
-    {
-        if (word[i] != ',')
-        {
-            tab1 += word[i];
-        }
-    }
-    if (tab1 != table1)
-    {
-        cerr << "Incorrect command2.\n";
-        return 1;
-    }
-    iss >> word;
-    if (word != table2)
-    {
-        cerr << "Incorrect command3.\n";
-        return 1;
+    std::istringstream iss(conditionStr);
+    std::string token;
+    std::vector<std::string> tokens;
+    while (iss >> token) {
+        tokens.push_back(token);
     }
 
-    iss >> word;
-    if (word != "WHERE")
-    { // если нет условий, то объединяем таблицы
-        crossJoin(tableJS, table1, table2, column1, column2, buffer);
-        return 0;
-    }
+    std::vector<std::string> conditionParts;
 
-    iss >> word; // таблица1 и колонка1
-    string t1, c1;
-    splitDot(word, t1, c1, tableJS);
-    iss >> word;
-    if (word != "=")
-    {
-        cerr << "Incorrect command4.\n";
-        return 1;
-    }
-
-    iss >> word; // первое условие
-    string t1cond = "", c1cond = "", s1 = "";
-    if (findDot(word))
-    {
-        splitDot(word, t1cond, c1cond, tableJS);
-    }
-    else
-    {
-        s1 = ignoreQuotes(word);
-    }
-
-    string oper;
-    iss >> oper;
-    if (oper != "AND" && oper != "OR")
-    {
-        if (checkCond(tableJS, t1, c1, t1cond, c1cond, s1))
-        {
-            crossJoin(tableJS, table1, table2, column1, column2, buffer);
-            return 0;
-        }
-        else
-        {
-            cout << "Conduction not fulfilled.\n";
-            return 0;
+    for (size_t i = 0; i < tokens.size(); ++i) {
+        if (tokens[i] == "AND" || tokens[i] == "OR") {
+            if (!conditionParts.empty()) {
+                std::string combined;
+                for (size_t j = 0; j < conditionParts.size(); ++j) {
+                    if (j > 0) combined += " ";
+                    combined += conditionParts[j];
+                }
+                conditionParts.clear();
+                parseSingleCondition(combined, conditions);
+            }
+            logicOps.push_back(tokens[i]);
+        } else {
+            conditionParts.push_back(tokens[i]);
         }
     }
 
-    iss >> word; // таблица2 и колонка2
-    string t2, c2;
-    splitDot(word, t2, c2, tableJS);
-    iss >> word;
-    if (word != "=")
-    {
-        cerr << "Incorrect command5.\n";
-        return 1;
+    if (!conditionParts.empty()) {
+        std::string combined;
+        for (size_t j = 0; j < conditionParts.size(); ++j) {
+            if (j > 0) combined += " ";
+            combined += conditionParts[j];
+        }
+        parseSingleCondition(combined, conditions);
+    }
+}
+
+
+// Функция проверки всех условий по логическим связкам
+bool checkAllConditions(const std::vector<Condition>& conditions,
+                        const std::vector<std::string>& headers,
+                        const std::vector<std::string>& rowValues,
+                        const std::vector<std::string>& logicOps) 
+{
+    if (conditions.empty()) {
+        // Нет условий
+        return true;
     }
 
-    iss >> word; // второе условие
-    string t2cond = "", c2cond = "", s2 = "";
-    if (findDot(word))
-    {
-        splitDot(word, t2cond, c2cond, tableJS);
-    }
-    else
-    {
-        s2 = ignoreQuotes(word);
-    }
-    if (oper == "AND")
-    {
-        if (checkCond(tableJS, t1, c1, t1cond, c1cond, s1) == true && checkCond(tableJS, t2, c2, t2cond, c2cond, s2) == true)
-        {
-            crossJoin(tableJS, table1, table2, column1, column2, buffer);
-            return 0;
+    // Находим индексы колонок для каждого условия
+    std::vector<int> conditionIndices;
+    for (const auto &cond : conditions) {
+        auto it = std::find(headers.begin(), headers.end(), cond.column);
+        if (it == headers.end()) {
+            throw std::runtime_error("Condition column not found: " + cond.column);
         }
-        else
-        {
-            cout << "Condition not fulfilled.\n";
-            return 0;
-        }
+        conditionIndices.push_back((int)std::distance(headers.begin(), it));
     }
-    if (oper == "OR")
-    {
-        if (checkCond(tableJS, t1, c1, t1cond, c1cond, s1) == true || checkCond(tableJS, t2, c2, t2cond, c2cond, s2) == true)
-        {
-            crossJoin(tableJS, table1, table2, column1, column2, buffer);
-            return 0;
-        }
-        else
-        {
-            cout << "Condition not fulfilled.\n";
-            return 0;
+
+    // Проверяем каждое условие
+    std::vector<bool> results;
+    for (size_t i = 0; i < conditions.size(); ++i) {
+        bool res = checkCondition(rowValues[conditionIndices[i]], conditions[i].value, conditions[i].op);
+        results.push_back(res);
+    }
+
+    // Объединяем результаты с учётом логических операторов
+    bool finalResult = results[0];
+    for (size_t i = 0; i < logicOps.size(); ++i) {
+        if (logicOps[i] == "AND") {
+            finalResult = finalResult && results[i+1];
+        } else if (logicOps[i] == "OR") {
+            finalResult = finalResult || results[i+1];
+        } else {
+            // Если оператор не AND/OR - ошибка
+            throw std::runtime_error("Unknown logical operator in WHERE clause.");
         }
     }
-    return 0;
+
+    return finalResult;
+}
+
+// Функция парсинга условий из строки после WHERE
+void selectFromTables(const std::string& command, TableJson& tableJS) {
+    std::filesystem::path currentDirectory = std::filesystem::current_path();
+    currentDirectory = currentDirectory.parent_path().string();
+    string currentDir = currentDirectory.string();
+
+    std::istringstream iss(command);
+    std::string word, tableName;
+    std::vector<std::string> selectedColumns;
+
+    // Парсим команду SELECT
+    iss >> word;  // "SELECT"
+    while (iss >> word && word != "FROM") {
+        if (!word.empty() && word.back() == ',') word.pop_back();
+        selectedColumns.push_back(word);
+    }
+    iss >> tableName;
+
+    // Парсим WHERE-условия, если есть
+    std::vector<Condition> conditions;
+    std::vector<std::string> logicOps;
+    size_t wherePos = command.find("WHERE");
+    if (wherePos != std::string::npos) {
+        std::string conditionStr = command.substr(wherePos + 5); // после слова WHERE
+        // Удалим ведущие и конечные пробелы
+        conditionStr.erase(0, conditionStr.find_first_not_of(" \t\n\r"));
+        conditionStr.erase(conditionStr.find_last_not_of(" \t\n\r")+1);
+        parseConditions(conditionStr, conditions, logicOps);
+    }
+
+    // Загружаем таблицу
+    std::string filePath = currentDir + "/" + tableName + "/1.csv";
+    std::ifstream tableFile(filePath);
+    if (!tableFile.is_open()) {
+        throw std::runtime_error("Table file does not exist: " + filePath);
+    }
+
+    // Читаем заголовки
+    std::string headerLine;
+    std::getline(tableFile, headerLine);
+    std::vector<std::string> headers;
+    {
+        std::istringstream headerStream(headerLine);
+        std::string header;
+        while (std::getline(headerStream, header, ',')) {
+            header = cleanValue(header);
+            headers.push_back(header);
+        }
+    }
+
+    // Если звездочка, выбираем все колонки
+    if (selectedColumns.size() == 1 && selectedColumns[0] == "*") {
+        selectedColumns = headers;
+    }
+
+    // Ищем индексы выбранных колонок
+    std::vector<int> columnIndices;
+    for (const auto& col : selectedColumns) {
+        auto it = std::find(headers.begin(), headers.end(), col);
+        if (it != headers.end()) {
+            columnIndices.push_back((int)std::distance(headers.begin(), it));
+        } else {
+            throw std::runtime_error("Column not found: " + col);
+        }
+    }
+
+    // Фильтруем строки и записываем результат
+    std::ofstream resultFile("select_result.csv");
+    // Записываем заголовки выбранных колонок
+    for (size_t i = 0; i < columnIndices.size(); ++i) {
+        if (i > 0) resultFile << ",";
+        resultFile << headers[columnIndices[i]];
+    }
+    resultFile << "\n";
+
+    std::string row;
+    while (std::getline(tableFile, row)) {
+        std::istringstream rowStream(row);
+        std::vector<std::string> values;
+        std::string value;
+        while (std::getline(rowStream, value, ',')) {
+            // Очищаем каждое прочитанное значение
+            value = cleanValue(value);
+            values.push_back(value);
+        }
+
+        // Проверяем условия
+        bool meetsCondition = checkAllConditions(conditions, headers, values, logicOps);
+
+        if (meetsCondition) {
+            for (size_t i = 0; i < columnIndices.size(); ++i) {
+                if (i > 0) resultFile << ",";
+                resultFile << values[columnIndices[i]];
+            }
+            resultFile << "\n";
+        }
+    }
+    resultFile.close();
 }
