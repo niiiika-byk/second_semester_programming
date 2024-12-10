@@ -1,4 +1,4 @@
-INSERT INTO user VALUES ('Alice', 30, 'alice@mail.com'), ('Bob', 25, 'bob@mail.com'), ('Charlie', 35, 'charlie@mail.com');
+INSERT INTO user VALUES (30, 'Alice', 'alice@mail.com'), (25, 'Bob', 'bob@mail.com'), (35, 'Charlie', 'charlie@mail.com');
 
 DELETE from users WHERE users.name = 'Bob'
 
