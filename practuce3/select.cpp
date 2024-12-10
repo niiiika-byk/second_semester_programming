@@ -2,7 +2,7 @@
 
 namespace fs = std::filesystem;
 
-// Удаление префикса таблицы и очистка от лишних пробелов
+// удаление префикса таблицы и очистка от пробелов
 std::string removeTablePrefix(const std::string& columnName) {
     size_t dotPos = columnName.find('.');
     std::string cleanCol = (dotPos != std::string::npos) ? columnName.substr(dotPos + 1) : columnName;
@@ -11,7 +11,7 @@ std::string removeTablePrefix(const std::string& columnName) {
     return cleanCol;
 }
 
-// Функция для очистки значения от кавычек и пробелов
+// очистка значения от кавычек и пробелов
 std::string cleanValue(std::string val) {
     val.erase(0, val.find_first_not_of(" \t\n\r'\""));
     val.erase(val.find_last_not_of(" \t\n\r'\"") + 1);
@@ -26,7 +26,7 @@ bool checkCondition(const std::string& cellValue, const std::string& condition, 
     std::cout << "[DEBUG] Comparing values: cleanedCellValue = '" << cleanedCellValue
               << "', cleanedCondition = '" << cleanedCondition << "'\n";
 
-    // Проверяем, не осталась ли точка с запятой на конце condition
+    //есть ли ; в конце
     if (!cleanedCondition.empty() && cleanedCondition.back() == ';') {
         cleanedCondition.pop_back();
         cleanedCondition = cleanValue(cleanedCondition);
