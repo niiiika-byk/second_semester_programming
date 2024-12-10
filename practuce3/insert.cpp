@@ -106,91 +106,95 @@ int insert(const string& command, TableJson& tableJS) {
         cerr << "Incorrect command.\n";
         return 1;
     }
-    string values;
-    while (iss >> word) {
-        values += word;
-    }
-    if (values.front() != '(' || values.back() != ')') {
-        cerr << "Incorrect command.\n";
+
+    std::string values;
+    std::getline(iss, values);
+    size_t start = values.find('(');
+    size_t end = values.rfind(')');
+    if (start == std::string::npos || end == std::string::npos || start >= end) {
+        std::cerr << "Incorrect command format.\n";
         return 1;
     }
+    values = values.substr(start + 1, end - start - 1);
 
+    // Разделяем значения на группы для множественной вставки
+    std::string valueSet;
+    std::istringstream valuesStream(values);
+    std::vector<std::string> records;
 
-    if (is_locked(tableName, tableJS.schemeName) == true) {
-        cerr << "Table is locked.\n";
-        return 1;
-    }
-    locker(tableName, tableJS.schemeName); //проверка блокировки
-
-    int currentPk;
-    string pkFile = currentDir + "/" + tableName + "/" + tableName + "_pk_sequence.txt";
-    ifstream fileIn(pkFile);
-    if (!fileIn.is_open()) {
-        cerr << "Failed to open file.\n";
-        return 1;
-    }
-    fileIn >> currentPk;
-    fileIn.close();
-    ofstream fileOut(pkFile);
-    if (!fileOut.is_open()) {
-        cerr << "Failed to open file.\n";
-        return 1;
-    }
-    currentPk++;
-    fileOut << currentPk; // записываем новый ключ
-    fileOut.close();
-
-    int csvNum = 1; // номер файла csv
-    while (true) {
-        string csvFile = currentDir + "/" + tableName + "/" + to_string(csvNum) + ".csv";
-        ifstream fileIn(csvFile);
-        if (!fileIn.is_open()) {
-            ofstream fileOut(csvFile);
-            if (!fileOut.is_open()) {
-                cerr << "Failed to open file.\n";
-                return 1;
-            }
-            fileOut.close();
+    while (std::getline(valuesStream, valueSet, ')')) {
+        size_t start = valueSet.find('(');
+        if (start != std::string::npos) {
+            valueSet = valueSet.substr(start + 1);
         }
-        else {
-            fileIn.close();
-        }
-        rapidcsv::Document doc(csvFile); // считываем csv, если csv полон
-        if (doc.GetRowCount() < tableJS.tableSize) {
-            break;
-        }
-        csvNum++;
-    }
 
-    string csvOne = currentDir + "/" + tableName + "/1.csv";
-    string csvF = currentDir + "/" + tableName + "/" + to_string(csvNum) + ".csv";
-    
-    rapidcsv::Document doc_(csvF);
-    if (doc_.GetRowCount() == 0 && doc_.GetColumnCount() == 0) {
-        copyColumnsName(csvOne, csvF);
-    }
-    ofstream csv(csvF, ios::app);
-    if (!csv.is_open()) {
-        cerr << "Failed to open file.\n";
-        return 1;
-    }
-    csv << currentPk << ","; // записываем текущий первичный ключ
-    for (int i = 0; i < values.size(); i++) {
-        if (values[i] == '\'') {
-            i++;
-            while (values[i] != '\'') {
-                csv << values[i];
-                i++;
-            }
-            if (values[i + 1] != ')') {
-                csv << ",";
-            }
-            else {
-                csv << endl;
-            }
+        if (!valueSet.empty()) {
+            records.push_back(valueSet); // Добавляем запись в вектор
         }
     }
-    csv.close();
-    locker(tableName, tableJS.schemeName); // разблокировка
+
+    if (is_locked(tableName, tableJS.schemeName)) {
+        std::cerr << "Table is locked.\n";
+        return 1;
+    }
+    locker(tableName, tableJS.schemeName); // Проверка блокировки
+
+    for (const auto& record : records) {
+        int currentPk;
+        std::string pkFile = currentDir + "/" + tableName + "/" + tableName + "_pk_sequence.txt";
+        std::ifstream pkIn(pkFile);
+        if (!pkIn.is_open()) {
+            std::cerr << "Failed to open primary key file: " << pkFile << std::endl;
+            locker(tableName, tableJS.schemeName); // Разблокируем в случае ошибки
+            return 1;
+        }
+        pkIn >> currentPk;
+        pkIn.close();
+
+        std::ofstream pkOut(pkFile);
+        if (!pkOut.is_open()) {
+            std::cerr << "Failed to open primary key file for writing: " << pkFile << std::endl;
+            locker(tableName, tableJS.schemeName); // Разблокируем в случае ошибки
+            return 1;
+        }
+        pkOut << ++currentPk;
+
+        int csvNum = 1;
+        std::string csvFile;
+        while (true) {
+            csvFile = currentDir + "/" + tableName + "/" + std::to_string(csvNum) + ".csv";
+            std::ifstream file(csvFile);
+            if (file.peek() == std::ifstream::traits_type::eof() || std::count(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>(), '\n') < tableJS.tableSize) {
+                break;
+            }
+            csvNum++;
+        }
+
+        std::ofstream csvOut(csvFile, std::ios::app);
+        if (!csvOut.is_open()) {
+            std::cerr << "Failed to open CSV file: " << csvFile << std::endl;
+            locker(tableName, tableJS.schemeName); // Разблокируем в случае ошибки
+            return 1;
+        }
+        csvOut << currentPk << ","; // Записываем текущий первичный ключ
+
+        // Обработка значений для вставки
+        size_t endPos = 0;
+        for (size_t i = 0; i < record.length(); i++) {
+            if (record[i] == ',' && (i == 0 || record[i - 1] != '\'')) {
+                std::string currentValue = record.substr(endPos, i - endPos);
+                csvOut << currentValue << ",";
+                endPos = i + 1;
+            } else if (record[i] == '\'' && (i == 0 || record[i - 1] != '\\')) {
+                // Игнорируем одинарные кавычки
+                continue;
+            }
+        }
+        // Записываем последнее значение
+        std::string lastValue = record.substr(endPos);
+        csvOut << lastValue << std::endl;
+
+        locker(tableName, tableJS.schemeName); // Разблокировка после вставки
+    }
     return 0;
 }
