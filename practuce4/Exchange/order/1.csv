@@ -1,0 +1,2 @@
+order_id,user_id,pair_id,quantity,price,type,closed
+2,1, 1, 100.0, 0.01, buy, 0
