@@ -1,0 +1,4 @@
+FROM python:3
+#ENTRYPOINT top -b
+ENTRYPOINT ["top", "-b"]
+CMD ["-n2"]
