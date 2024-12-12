@@ -8,9 +8,6 @@ import sys
 API_URL = "http://localhost:5000"  # URL вашего API
 
 def get_price(pair_id):
-    # Здесь вы должны реализовать логику получения текущей цены для валютной пары
-    # Например, можно использовать API для получения последней цены
-    # Для примера, просто вернем случайное значение
     return random.uniform(0.001, 0.01)
 
 def place_order(user_key, order_type, pair_id, quantity, price):
@@ -27,7 +24,7 @@ def place_order(user_key, order_type, pair_id, quantity, price):
     return response.json()
 
 def algorithmic_trading_bot(user_key):
-    pair_id = 1  # Замените на реальный ID валютной пары
+    pair_id = 1
     previous_price = get_price(pair_id)
 
     while True:
