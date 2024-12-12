@@ -30,7 +30,7 @@ def random_trading_bot(user_key):
         result = place_order(user_key, order_type, pair_id, quantity, price)
         print(f"Placed {order_type} order: {result}")
 
-        time.sleep(1)  # Пауза 1 секунда
+        time.sleep(1)  # Пауза 3 секунда
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
