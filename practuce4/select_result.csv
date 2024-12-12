@@ -1,4 +1,1 @@
-number,user_id,lot_id,quantity
-6,2,3,1000
-12,2,2,800.0
-13,2,1,1002.0
+order_id,user_id,pair_id,quantity,price,type,closed
